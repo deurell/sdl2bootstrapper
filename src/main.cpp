@@ -6,7 +6,8 @@
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH  = 960;
 static const int SCREEN_HEIGHT = 540;
-static SDL_Window *window = NULL;
+static SDL_Window *window = nullptr;
+static SDL_Renderer *renderer = nullptr;
 static SDL_GLContext mainContext;
 
 static void sdl_die(const char * message) {
@@ -46,6 +47,13 @@ void init_screen(const char* title) {
         sdl_die("Couldn't create window");
     }
 
+    renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
+    if (renderer == nullptr) {
+        sdl_die("Couldn't create renderer");
+    }
+    SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+
     mainContext = SDL_GL_CreateContext(window);
     if (mainContext == NULL) {
         sdl_die("Failed to create OpenGL context");
@@ -71,6 +79,21 @@ void init_screen(const char* title) {
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
+void drawRect() {
+    SDL_SetRenderDrawColor(renderer,0,0,0,0);
+    SDL_RenderClear(renderer);
+    SDL_Rect rect;
+    rect.x = 100;
+    rect.y = 100;
+    rect.w = 100;
+    rect.h = 100;
+
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_RenderDrawRect(renderer, &rect);
+
+    SDL_RenderPresent(renderer);
+
+}
 
 int main(int argc, char *argv[]) {
     init_screen("OpenGL 3.2");
@@ -82,6 +105,7 @@ int main(int argc, char *argv[]) {
             if (event.type == SDL_QUIT) {
                 quit = true;
             }
+            drawRect();
         }
     }
 }
