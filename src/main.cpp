@@ -3,7 +3,7 @@
 #include <SDL2/SDL.h>
 #include "glad/glad.h"
 
-static const int SCREEN_FULLSCREEN = 0;
+// static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
 static SDL_Window *window = nullptr;
