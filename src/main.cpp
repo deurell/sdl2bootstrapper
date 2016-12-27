@@ -10,14 +10,14 @@ static SDL_Window *window = nullptr;
 static SDL_Renderer *renderer = nullptr;
 static SDL_GLContext mainContext;
 
-static void sdl_die(const char *message) {
+static void sdlDie(const char *message) {
     fprintf(stderr, "%s: %s\n", message, SDL_GetError());
     exit(2);
 }
 
-void init_screen(const char *title) {
+void initScreen(const char *title) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        sdl_die("Failed to init SDL Video");
+        sdlDie("Failed to init SDL Video");
     }
     atexit(SDL_Quit);
     SDL_GL_LoadLibrary(NULL); // Default OpenGL is fine.
@@ -36,12 +36,12 @@ void init_screen(const char *title) {
     );
 
     if (nullptr == window) {
-        sdl_die("Couldn't create window");
+        sdlDie("Couldn't create window");
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (nullptr == renderer) {
-        sdl_die("Couldn't create renderer");
+        sdlDie("Couldn't create renderer");
     }
 
     SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -49,7 +49,7 @@ void init_screen(const char *title) {
 
     mainContext = SDL_GL_CreateContext(window);
     if (nullptr == mainContext) {
-        sdl_die("Failed to create OpenGL context");
+        sdlDie("Failed to create OpenGL context");
     }
 
     // Get OpenGL props
@@ -87,7 +87,7 @@ void drawRect() {
 }
 
 int main(int argc, char *argv[]) {
-    init_screen("OpenGL 3.2");
+    initScreen("OpenGL 3.2");
     SDL_Event event;
     bool quit = false;
     while (!quit) {
