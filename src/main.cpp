@@ -77,14 +77,20 @@ void initScreen(const char *title) {
 void drawRect() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);
+
+    SDL_Rect imageRect;
+    imageRect.x = 0;
+    imageRect.y = 0;
+    imageRect.w = 20;
+    imageRect.h = 20;
+    SDL_RenderCopy(renderer, texture, nullptr, &imageRect);
+
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_Rect rect;
     rect.x = 100;
     rect.y = 100;
-    rect.w = 100;
-    rect.h = 100;
-
-    SDL_RenderCopy(renderer, texture, nullptr, nullptr);
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    rect.w = 20;
+    rect.h = 20;
     SDL_RenderDrawRect(renderer, &rect);
     SDL_RenderPresent(renderer);
 }
@@ -98,10 +104,9 @@ int main(int argc, char *argv[]) {
     SDL_Event event;
     bool quit = false;
     while (!quit) {
-        SDL_GL_SwapWindow(window);
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) { quit = true; }
-            drawRect();
         }
+        drawRect();
     }
 }
