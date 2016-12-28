@@ -74,39 +74,49 @@ void initScreen(const char *title) {
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-void drawRect() {
+void render() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);
 
     SDL_Rect imageRect;
     imageRect.x = 0;
     imageRect.y = 0;
-    imageRect.w = 20;
-    imageRect.h = 20;
+    imageRect.w = 80;
+    imageRect.h = 80;
     SDL_RenderCopy(renderer, texture, nullptr, &imageRect);
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_Rect rect;
     rect.x = 100;
     rect.y = 100;
-    rect.w = 20;
-    rect.h = 20;
+    rect.w = 100;
+    rect.h = 100;
     SDL_RenderDrawRect(renderer, &rect);
     SDL_RenderPresent(renderer);
 }
 
 int main(int argc, char *argv[]) {
     initScreen("OpenGL 3.2");
-
     image = SDL_LoadBMP("image.bmp");
     texture = SDL_CreateTextureFromSurface(renderer, image);
+
+    Uint32 currentTime, lastTime;
+    float delta;
 
     SDL_Event event;
     bool quit = false;
     while (!quit) {
+
+        lastTime = currentTime;
+        currentTime = SDL_GetTicks();
+        delta = (currentTime - lastTime) / 1000.0f;
+
+        // handle input
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) { quit = true; }
         }
-        drawRect();
+
+        // render
+        render();
     }
 }
