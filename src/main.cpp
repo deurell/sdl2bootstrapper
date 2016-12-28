@@ -9,8 +9,6 @@ static const int SCREEN_HEIGHT = 540;
 static SDL_Window *window = nullptr;
 static SDL_Renderer *renderer = nullptr;
 static SDL_GLContext mainContext;
-static SDL_Surface* image;
-static SDL_Texture* texture;
 
 static void sdlDie(const char *message) {
     fprintf(stderr, "%s: %s\n", message, SDL_GetError());
@@ -78,13 +76,6 @@ void render() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);
 
-    SDL_Rect imageRect;
-    imageRect.x = 0;
-    imageRect.y = 0;
-    imageRect.w = 80;
-    imageRect.h = 80;
-    SDL_RenderCopy(renderer, texture, nullptr, &imageRect);
-
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_Rect rect;
     rect.x = 100;
@@ -97,8 +88,6 @@ void render() {
 
 int main(int argc, char *argv[]) {
     initScreen("OpenGL 3.2");
-    image = SDL_LoadBMP("image.bmp");
-    texture = SDL_CreateTextureFromSurface(renderer, image);
 
     Uint32 currentTime, lastTime;
     float deltaTime;
