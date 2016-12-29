@@ -15,7 +15,7 @@ static void sdlDie(const char *message) {
     exit(2);
 }
 
-void initScreen(const char *title) {
+void initScreen(const char* title) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         sdlDie("Failed to init SDL Video");
     }
