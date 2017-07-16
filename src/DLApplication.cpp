@@ -10,11 +10,8 @@
 #include <glad/glad.h>
 
 // static const int SCREEN_FULLSCREEN = 0;
-static const int SCREEN_WIDTH = 960;
-static const int SCREEN_HEIGHT = 540;
-static SDL_Window *window = nullptr;
-static SDL_Renderer *renderer = nullptr;
-static SDL_GLContext mainContext;
+constexpr int SCREEN_WIDTH = 960;
+constexpr int SCREEN_HEIGHT = 540;
 
 void DLApplication::run() {
     initScreen("OpenGL 3.2");
@@ -60,26 +57,26 @@ void DLApplication::initScreen(const char *title) {
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-    window = SDL_CreateWindow(
+    mWindow = SDL_CreateWindow(
             title,
             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL
     );
 
-    if (nullptr == window) {
+    if (nullptr == mWindow) {
         sdlDie("Couldn't create window");
     }
 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (nullptr == renderer) {
+    mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
+    if (nullptr == mRenderer) {
         sdlDie("Couldn't create renderer");
     }
 
-    SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_RenderSetLogicalSize(mRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+    SDL_SetRenderDrawColor(mRenderer, 255, 0, 0, 255);
 
-    mainContext = SDL_GL_CreateContext(window);
-    if (nullptr == mainContext) {
+    mMainContext = SDL_GL_CreateContext(mWindow);
+    if (nullptr == mMainContext) {
         sdlDie("Failed to create OpenGL context");
     }
 
@@ -98,21 +95,21 @@ void DLApplication::initScreen(const char *title) {
     glDisable(GL_CULL_FACE);
 
     int width, height;
-    SDL_GetWindowSize(window, &width, &height);
+    SDL_GetWindowSize(mWindow, &width, &height);
     glViewport(0, 0, width, height);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 void DLApplication::render() {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 0);
+    SDL_RenderClear(mRenderer);
 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_SetRenderDrawColor(mRenderer, 255, 0, 0, 255);
     SDL_Rect rect;
     rect.x = 100;
     rect.y = 100;
     rect.w = 100;
     rect.h = 100;
-    SDL_RenderDrawRect(renderer, &rect);
-    SDL_RenderPresent(renderer);
+    SDL_RenderDrawRect(mRenderer, &rect);
+    SDL_RenderPresent(mRenderer);
 }
