@@ -16,14 +16,13 @@ public:
     void run();
 
 private:
-    SDL_Window *mWindow = nullptr;
-    SDL_Renderer *mRenderer = nullptr;
-    SDL_GLContext mMainContext;
-
-
     void sdlDie(const char *message);
     void initScreen(const char* title);
     void render();
+
+    SDL_Window *mWindow = nullptr;
+    SDL_Renderer *mRenderer = nullptr;
+    SDL_GLContext mMainContext = nullptr;
 };
 
 
