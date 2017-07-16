@@ -13,6 +13,10 @@ class SDL_Renderer;
 class DLApplication {
 
 public:
+    DLApplication() = default;
+    ~DLApplication() = default;
+    DLApplication(const DLApplication&) = delete;
+
     void run();
 
 private:
@@ -24,6 +28,5 @@ private:
     SDL_Renderer *mRenderer = nullptr;
     SDL_GLContext mMainContext = nullptr;
 };
-
 
 #endif //SDL2_GLAD_DLAPPLICATION_H
