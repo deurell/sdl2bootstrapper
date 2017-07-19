@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <glad/glad.h>
+#include <SDL2/SDL_image.h>
 
 // static const int SCREEN_FULLSCREEN = 0;
 constexpr int SCREEN_WIDTH = 960;
@@ -46,8 +47,14 @@ void DLApplication::initScreen(const char *title) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         sdlDie("Failed to init SDL Video");
     }
+
     atexit(SDL_Quit);
     SDL_GL_LoadLibrary(NULL); // Default OpenGL is fine.
+
+    int imgFlags = IMG_INIT_PNG;
+    if(!(IMG_Init(imgFlags) && imgFlags)) {
+        printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+    }
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
