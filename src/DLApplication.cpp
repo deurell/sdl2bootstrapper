@@ -1,5 +1,5 @@
 //
-// Created by mikae on 2017-07-16.
+// Created by Mikael Deurell on 2017-07-16.
 //
 
 #include "DLApplication.h"
@@ -8,34 +8,26 @@
 #include <cstdlib>
 #include <glad/glad.h>
 #include <SDL2/SDL_image.h>
+#include <iostream>
 
-// static const int SCREEN_FULLSCREEN = 0;
 constexpr int SCREEN_WIDTH = 960;
 constexpr int SCREEN_HEIGHT = 540;
 
 void DLApplication::run() {
     initScreen("OpenGL 3.2");
 
-    Uint32 currentTime, lastTime;
-    float deltaTime;
+    Uint32 currentTime = 0;
 
-    SDL_Event event;
+    SDL_Event event{};
     bool quit = false;
     while (!quit) {
-
-        lastTime = currentTime;
         currentTime = SDL_GetTicks();
-        deltaTime = (currentTime - lastTime) / 1000.0f;
-
-        // process all events
-        while (SDL_PollEvent(&event)) {
+        while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_QUIT) { quit = true; }
         }
-
-        // render
         render();
     }
-
+    clean_up();
 }
 
 void DLApplication::sdlDie(const char *message) {
@@ -52,7 +44,7 @@ void DLApplication::initScreen(const char *title) {
     SDL_GL_LoadLibrary(NULL); // Default OpenGL is fine.
 
     int imgFlags = IMG_INIT_PNG;
-    if(!(IMG_Init(imgFlags) && imgFlags)) {
+    if(!((IMG_Init(imgFlags) != 0) && (imgFlags != 0))) {
         printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
     }
 
@@ -74,12 +66,15 @@ void DLApplication::initScreen(const char *title) {
     }
 
     mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
-    if (nullptr == mRenderer) {
+    if (mRenderer == nullptr) {
         sdlDie("Couldn't create renderer");
     }
 
     SDL_RenderSetLogicalSize(mRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
     SDL_SetRenderDrawColor(mRenderer, 255, 0, 0, 255);
+
+    mSurface = IMG_Load("image.png");
+    mTexture = SDL_CreateTextureFromSurface(mRenderer, mSurface);
 
     mMainContext = SDL_GL_CreateContext(mWindow);
     if (nullptr == mMainContext) {
@@ -88,6 +83,7 @@ void DLApplication::initScreen(const char *title) {
 
     // Get OpenGL props
     printf("OpenGL loaded\n");
+
     gladLoadGLLoader(SDL_GL_GetProcAddress);
     printf("Vendor:   %s\n", glGetString(GL_VENDOR));
     printf("Renderer: %s\n", glGetString(GL_RENDERER));
@@ -110,12 +106,17 @@ void DLApplication::render() {
     SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 0);
     SDL_RenderClear(mRenderer);
 
-    SDL_SetRenderDrawColor(mRenderer, 255, 0, 0, 255);
-    SDL_Rect rect;
-    rect.x = 100;
-    rect.y = 100;
-    rect.w = 100;
-    rect.h = 100;
+    SDL_SetRenderDrawColor(mRenderer, 0, 255, 0, 255);
+    SDL_Rect rect {150, 150, 200, 100};
     SDL_RenderDrawRect(mRenderer, &rect);
+
+    SDL_Rect dstRect {0, 0, 200, 200};
+    SDL_Rect srcRect {150, 150, 200, 200};
+    SDL_RenderCopy(mRenderer, mTexture, &srcRect, &dstRect );
     SDL_RenderPresent(mRenderer);
+}
+
+void DLApplication::clean_up() {
+    SDL_FreeSurface(mSurface);
+    IMG_Quit();
 }
