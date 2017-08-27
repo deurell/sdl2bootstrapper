@@ -103,13 +103,16 @@ void DLApplication::initScreen(const char *title) {
 }
 
 void DLApplication::render() {
+    // clear screen
     SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 0);
     SDL_RenderClear(mRenderer);
 
+    // render the rect
     SDL_SetRenderDrawColor(mRenderer, 0, 255, 0, 255);
     SDL_Rect rect {150, 150, 200, 100};
     SDL_RenderDrawRect(mRenderer, &rect);
 
+    // render the png
     SDL_Rect dstRect {0, 0, 200, 200};
     SDL_Rect srcRect {150, 150, 200, 200};
     SDL_RenderCopy(mRenderer, mTexture, &srcRect, &dstRect );

@@ -15,7 +15,7 @@ include_directories(include
 set(SOURCE_FILES
         src/main.cpp
         src/glad.c
-        src/DLApplication.cpp include/DLApplication.h src/Tracer.cpp src/Tracer.h)
+        src/DLApplication.cpp include/DLApplication.h)
 
 add_executable(sdl2_glad ${SOURCE_FILES})
 
