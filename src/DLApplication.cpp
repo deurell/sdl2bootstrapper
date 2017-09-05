@@ -65,7 +65,6 @@ void DLApplication::InitScreen(std::string const &title) {
     if (mRenderer == nullptr) {
         SdlDie("Couldn't create renderer");
     }
-
     SDL_RenderSetLogicalSize(mRenderer, screenWidth, screen_height);
     SDL_SetRenderDrawColor(mRenderer, 255, 0, 0, 255);
 
@@ -87,8 +86,6 @@ void DLApplication::InitScreen(std::string const &title) {
 
     // Use v-sync
     SDL_GL_SetSwapInterval(1);
-
-    // Disable depth test and face culling.
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
@@ -100,16 +97,13 @@ void DLApplication::InitScreen(std::string const &title) {
 }
 
 void DLApplication::Render() {
-    // clear screen
     SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 0);
     SDL_RenderClear(mRenderer);
 
-    // render the rect
     SDL_SetRenderDrawColor(mRenderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
     SDL_Rect rect {150, 150, 200, 100};
     SDL_RenderDrawRect(mRenderer, &rect);
 
-    // render the png
     SDL_Rect dstRect {0, 0, 200, 200};
     SDL_Rect srcRect {150, 150, 200, 200};
     SDL_RenderCopy(mRenderer, mTexture, &srcRect, &dstRect );
