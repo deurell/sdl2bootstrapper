@@ -4,47 +4,40 @@
 
 #include "DLApplication.h"
 #include <SDL2/SDL.h>
-#include <cstdio>
-#include <cstdlib>
 #include <glad/glad.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
-constexpr int SCREEN_WIDTH = 960;
-constexpr int SCREEN_HEIGHT = 540;
-
-void DLApplication::run() {
-    initScreen("OpenGL 3.2");
-
-    Uint32 currentTime = 0;
+void DLApplication::Run() {
+    InitScreen("OpenGL 3.2");
 
     SDL_Event event{};
     bool quit = false;
     while (!quit) {
-        currentTime = SDL_GetTicks();
+        SDL_GetTicks();
         while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_QUIT) { quit = true; }
         }
-        render();
+        Render();
     }
-    clean_up();
+    CleanUp();
 }
 
-void DLApplication::sdlDie(const char *message) {
+void DLApplication::SdlDie(std::string const &message) const {
     fprintf(stderr, "%s: %s\n", message, SDL_GetError());
     exit(2);
 }
 
-void DLApplication::initScreen(const char *title) {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        sdlDie("Failed to init SDL Video");
+void DLApplication::InitScreen(std::string const &title) {
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        SdlDie("Failed to init SDL Video");
     }
 
     atexit(SDL_Quit);
     SDL_GL_LoadLibrary(NULL); // Default OpenGL is fine.
 
     int imgFlags = IMG_INIT_PNG;
-    if(!((IMG_Init(imgFlags) != 0) && (imgFlags != 0))) {
+    if (IMG_Init(imgFlags) == 0) {
         printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
     }
 
@@ -55,30 +48,33 @@ void DLApplication::initScreen(const char *title) {
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
+    constexpr int screenWidth = 960;
+    constexpr int screen_height = 540;
+
     mWindow = SDL_CreateWindow(
-            title,
+            title.c_str(),
             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-            SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL
+            screenWidth, screen_height, SDL_WINDOW_OPENGL
     );
 
-    if (nullptr == mWindow) {
-        sdlDie("Couldn't create window");
+    if (mWindow == nullptr) {
+        SdlDie("Couldn't create window");
     }
 
     mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
     if (mRenderer == nullptr) {
-        sdlDie("Couldn't create renderer");
+        SdlDie("Couldn't create renderer");
     }
 
-    SDL_RenderSetLogicalSize(mRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+    SDL_RenderSetLogicalSize(mRenderer, screenWidth, screen_height);
     SDL_SetRenderDrawColor(mRenderer, 255, 0, 0, 255);
 
     mSurface = IMG_Load("image.png");
     mTexture = SDL_CreateTextureFromSurface(mRenderer, mSurface);
 
     mMainContext = SDL_GL_CreateContext(mWindow);
-    if (nullptr == mMainContext) {
-        sdlDie("Failed to create OpenGL context");
+    if (mMainContext == nullptr) {
+        SdlDie("Failed to create OpenGL context");
     }
 
     // Get OpenGL props
@@ -96,19 +92,20 @@ void DLApplication::initScreen(const char *title) {
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
-    int width, height;
+    int height;
+    int width;
     SDL_GetWindowSize(mWindow, &width, &height);
     glViewport(0, 0, width, height);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-void DLApplication::render() {
+void DLApplication::Render() {
     // clear screen
     SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 0);
     SDL_RenderClear(mRenderer);
 
     // render the rect
-    SDL_SetRenderDrawColor(mRenderer, 0, 255, 0, 255);
+    SDL_SetRenderDrawColor(mRenderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
     SDL_Rect rect {150, 150, 200, 100};
     SDL_RenderDrawRect(mRenderer, &rect);
 
@@ -119,7 +116,7 @@ void DLApplication::render() {
     SDL_RenderPresent(mRenderer);
 }
 
-void DLApplication::clean_up() {
+void DLApplication::CleanUp() {
     SDL_FreeSurface(mSurface);
     IMG_Quit();
 }

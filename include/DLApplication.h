@@ -1,12 +1,12 @@
 //
-// Created by mikae on 2017-07-16.
+// Created by Mikael Deurell on 2017-07-16.
 //
 
-#ifndef SDL2_GLAD_DLAPPLICATION_H
-#define SDL2_GLAD_DLAPPLICATION_H
+#pragma once
 
 #include <SDL2/SDL_video.h>
 #include <SDL_render.h>
+#include <string>
 
 class SDL_Window;
 class SDL_Renderer;
@@ -16,15 +16,16 @@ class DLApplication {
 public:
     DLApplication() = default;
     ~DLApplication() = default;
-    DLApplication(const DLApplication&) = delete;
+    DLApplication(const DLApplication &rhs) = delete;
+    DLApplication& operator=(const DLApplication &rhs) = delete;
 
-    void run();
+    void Run();
 
 private:
-    void sdlDie(const char *message);
-    void initScreen(const char* title);
-    void render();
-    void clean_up();
+    void SdlDie(std::string const &message) const;
+    void InitScreen(std::string const &title);
+    void Render();
+    void CleanUp();
 
     SDL_Window *mWindow = nullptr;
     SDL_Renderer *mRenderer = nullptr;
@@ -34,5 +35,3 @@ private:
     SDL_Texture *mTexture = nullptr;
 
 };
-
-#endif //SDL2_GLAD_DLAPPLICATION_H
