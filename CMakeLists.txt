@@ -11,6 +11,24 @@ include_directories(include)
 set(SOURCE_FILES
         src/main.cpp
         src/glad.c
+        src/Matrix.h
+        src/Quaternion.h
+        src/Animation.h
+        src/Camera.h
+        src/Camera.cpp
+        src/DLApplication.cpp
+        src/DLSceneObject.h
+        src/DLSceneObject.cpp
+        src/IRender.hpp
+        src/Matrix.h
+        src/Quaternion.h
+        src/SceneRequest.h
+        src/SceneRequest.cpp
+        src/SplashScene.h
+        src/SplashScene.cpp
+        src/Square.h
+        src/Square.cpp
+        src/Vector.h
         )
 
 add_executable(sdl2_glad ${SOURCE_FILES})

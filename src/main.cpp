@@ -1,8 +1,9 @@
 #include <cstdio>
 #include <cstdlib>
+#include "glad/glad.h"
+
 #include <SDL2/SDL.h>
 #include <exception>
-#include "glad/glad.h"
 
 const GLchar* vertexSource =
         "attribute vec4 position;    \n"
