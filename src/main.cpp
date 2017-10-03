@@ -1,9 +1,22 @@
 #include <cstdio>
 #include <cstdlib>
 #include <SDL2/SDL.h>
+#include <exception>
 #include "glad/glad.h"
 
-// static const int SCREEN_FULLSCREEN = 0;
+const GLchar* vertexSource =
+        "attribute vec4 position;    \n"
+                "void main()                  \n"
+                "{                            \n"
+                "   gl_Position = vec4(position.xyz, 1.0);  \n"
+                "}                            \n";
+const GLchar* fragmentSource =
+        "precision mediump float;\n"
+                "void main()                                  \n"
+                "{                                            \n"
+                "  gl_FragColor = vec4 (1.0, 1.0, 1.0, 1.0 );\n"
+                "}                                            \n";
+
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
 static SDL_Window *window = nullptr;
@@ -15,7 +28,7 @@ static void sdlDie(const char *message) {
     exit(2);
 }
 
-void initScreen(const char* title) {
+int main(int argc, char *argv[]) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         sdlDie("Failed to init SDL Video");
     }
@@ -30,7 +43,7 @@ void initScreen(const char* title) {
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
     window = SDL_CreateWindow(
-            title,
+            "Demo",
             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL
     );
@@ -52,17 +65,13 @@ void initScreen(const char* title) {
         sdlDie("Failed to create OpenGL context");
     }
 
-    // Get OpenGL props
     printf("OpenGL loaded\n");
     gladLoadGLLoader(SDL_GL_GetProcAddress);
     printf("Vendor:   %s\n", glGetString(GL_VENDOR));
     printf("Renderer: %s\n", glGetString(GL_RENDERER));
     printf("Version:  %s\n", glGetString(GL_VERSION));
 
-    // Use v-sync
     SDL_GL_SetSwapInterval(1);
-
-    // Disable depth test and face culling.
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
@@ -70,40 +79,50 @@ void initScreen(const char* title) {
     SDL_GetWindowSize(window, &width, &height);
     glViewport(0, 0, width, height);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-}
 
-void render() {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-    SDL_RenderClear(renderer);
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_Rect rect;
-    rect.x = 100;
-    rect.y = 100;
-    rect.w = 100;
-    rect.h = 100;
-    SDL_RenderDrawRect(renderer, &rect);
-    SDL_RenderPresent(renderer);
-}
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
 
-int main(int argc, char *argv[]) {
-    initScreen("OpenGL 3.2");
+    GLfloat vertices[] = {0.0f, 0.5f, 0.5f, -0.5f, -0.5f, -0.5f};
 
-    Uint32 currentTime, lastTime;
-    float deltaTime;
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    SDL_Event event;
-    bool quit = false;
-    while (!quit) {
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertexSource, NULL);
+    glCompileShader(vertexShader);
 
-        lastTime = currentTime;
-        currentTime = SDL_GetTicks();
-        deltaTime = (currentTime - lastTime) / 1000.0f;
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
+    glCompileShader(fragmentShader);
 
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) { quit = true; }
+    GLuint shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
+    glUseProgram(shaderProgram);
+
+    GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+    glEnableVertexAttribArray(posAttrib);
+    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+    auto loop = [&]
+    {
+        SDL_Event e{};
+        while(SDL_PollEvent(&e))
+        {
+            if(e.type == SDL_QUIT) std::terminate();
         }
 
-        render();
-    }
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        SDL_GL_SwapWindow(window);
+    };
+    while(true) loop();
 }
