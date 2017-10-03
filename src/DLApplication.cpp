@@ -1,12 +1,11 @@
-
 #include "IRender.hpp"
 #include <iostream>
 #include "SplashScene.h"
 #include "SceneRequest.h"
 
 #define STRINGIFY(A)  #A
-#include "../../../Users/mikae/Downloads/enginedemo_ios-master/enginedemo_ios-master/gameengine/Shaders/Simple.vert"
-#include "../../../Users/mikae/Downloads/enginedemo_ios-master/enginedemo_ios-master/gameengine/Shaders/Simple.frag"
+#include "../Shaders/Simple.vert"
+#include "../Shaders/Simple.frag"
 
 using namespace std;
 
