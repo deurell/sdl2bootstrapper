@@ -25,16 +25,15 @@ public:
     bool SceneAvailable() const;
 
 private:
+    void SetupNextScene(SceneRequest sceneRequest);
+
     DLScene *mScene;
     GLuint BuildShader(const char* source, GLenum shaderType) const;
     GLuint BuildProgram(const char* vShader, const char* fShader) const;
     GLuint mSimpleProgram;
     float mHeight;
     float mWidth;
-
     SceneRequest mCurrentScene;
-
-    void SetupNextScene(SceneRequest sceneRequest);
 };
 
 IRender* CreateApplication() {

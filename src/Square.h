@@ -18,7 +18,6 @@ struct Vertex {
     vec4 Color;
 };
 
-
 class Square
 {
 public:

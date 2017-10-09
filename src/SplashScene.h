@@ -26,6 +26,10 @@ protected:
     virtual void UpdateAnimation(float timeStep);
 
 private:
+    void DrawLogo() const;
+    void DrawSquare(vec3 transform, vec4 color) const;
+    vec4 GetColorForIndex(int index) const;
+
     GLfloat mDepthDegree;
     GLfloat mRotationAngle;
     GLfloat mCameraDegree;
@@ -38,8 +42,4 @@ private:
     float mCoolness;
     Square* mSquare;
     Camera * mCamera;
-    
-    void DrawLogo() const;
-    void DrawSquare(vec3 transform, vec4 color) const;
-    vec4 GetColorForIndex(int index) const;
 };

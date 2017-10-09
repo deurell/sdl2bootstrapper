@@ -23,7 +23,6 @@ set(SOURCE_FILES
         src/Matrix.h
         src/Quaternion.h
         src/SceneRequest.h
-        src/SceneRequest.cpp
         src/SplashScene.h
         src/SplashScene.cpp
         src/Square.h
