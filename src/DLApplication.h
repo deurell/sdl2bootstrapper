@@ -82,6 +82,9 @@ void DLApplication::Initialize(int width, int height) {
     mHeight = height;
     mWidth = width;
 
+    glViewport(0, 0, width, height);
+    glEnable(GL_DEPTH_TEST);
+
     mSimpleProgram = BuildProgram(SimpleVertexShader, SimpleFragmentShader);
     glUseProgram(mSimpleProgram);
 
