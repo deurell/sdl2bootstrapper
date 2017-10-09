@@ -55,6 +55,9 @@ int main(int argc, char *argv[]) {
     int width, height;
     SDL_GetWindowSize(window, &width, &height);
 
+    glViewport(0, 0, width, height);
+    glEnable(GL_DEPTH_TEST);
+
     auto application = CreateApplication();
     application->Initialize(width, height);
 
