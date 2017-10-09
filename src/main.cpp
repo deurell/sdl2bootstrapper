@@ -58,19 +58,18 @@ int main(int argc, char *argv[]) {
     auto application = CreateApplication();
     application->Initialize(width, height);
 
-    Uint32 mTime;
-    auto loop = [&] {
-        SDL_Event e{};
-        while(SDL_PollEvent(&e)) {
-            if(e.type == SDL_QUIT) std::terminate();
+    Uint32 lastTime = 0;
+    SDL_Event event {};
+    bool quit = false;
+    while (!quit) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) { quit = true; }
         }
-
         Uint32 currentTime = SDL_GetTicks();
-        float delta = (currentTime - mTime)/1000.0f;
-        mTime = currentTime;
+        float delta = (currentTime - lastTime) / 1000.0f;
+        lastTime = currentTime;
         application->UpdateAnimation(delta);
         application->Render();
         SDL_GL_SwapWindow(window);
-    };
-    while(true) loop();
+    }
 }
