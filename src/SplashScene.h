@@ -30,9 +30,9 @@ private:
     void DrawSquare(vec3 transform, vec4 color) const;
     vec4 GetColorForIndex(int index) const;
 
-    GLfloat mDepthDegree;
-    GLfloat mRotationAngle;
-    GLfloat mCameraDegree;
+    float mDepthDegree;
+    float mRotationAngle;
+    float mCameraDegree;
     GLfloat mScale;
     GLfloat mDevice;
 

@@ -69,11 +69,13 @@ void SplashScene::Initialize(int width, int height) {
 }
 
 void SplashScene::UpdateAnimation(float timeStep) {
-    float cameraDegree = timeStep * 45;
-    mCameraDegree += cameraDegree;
+    float cameraDegree = timeStep * 45.0f;
+    float val = mCameraDegree + cameraDegree;
+    mCameraDegree = static_cast<float>(fmod(val, 360));
 
-    float wobbleDegree = timeStep * 25;
-    mDepthDegree += wobbleDegree;
+    float wobbleDegree = timeStep * 25.0f;
+    val = mDepthDegree + wobbleDegree;
+    mDepthDegree = static_cast<float>(fmod(val, 360));
 
     auto z = static_cast<float>(30 * sin(DEGREES_TO_RADIANS(mCameraDegree)));
     auto y = static_cast<float>(30 * cos(DEGREES_TO_RADIANS(mCameraDegree)));
