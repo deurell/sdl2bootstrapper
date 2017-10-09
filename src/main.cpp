@@ -7,8 +7,7 @@
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
 static SDL_Window *window = nullptr;
-static SDL_Renderer *renderer = nullptr;
-static SDL_GLContext mainContext;
+static SDL_GLContext context;
 
 static void sdlDie(const char *message) {
     fprintf(stderr, "%s: %s\n", message, SDL_GetError());
@@ -41,8 +40,8 @@ int main(int argc, char *argv[]) {
         sdlDie("Couldn't create window");
     }
 
-    mainContext = SDL_GL_CreateContext(window);
-    if (nullptr == mainContext) {
+    context = SDL_GL_CreateContext(window);
+    if (nullptr == context) {
         sdlDie("Failed to create OpenGL context");
     }
 
@@ -72,4 +71,9 @@ int main(int argc, char *argv[]) {
         application->Render();
         SDL_GL_SwapWindow(window);
     }
+
+    SDL_DestroyWindow(window);
+    window = nullptr;
+    SDL_Quit();
+    return 0;
 }
