@@ -25,19 +25,10 @@ public:
     bool SceneAvailable() const;
 
 private:
-    DLScene *mSceneObject;
-
+    DLScene *mScene;
     GLuint BuildShader(const char* source, GLenum shaderType) const;
     GLuint BuildProgram(const char* vShader, const char* fShader) const;
-
     GLuint mSimpleProgram;
-    GLuint mFramebuffer;
-    GLuint mColorRenderbuffer;
-    GLuint mDepthRenderbuffer;
-
-    GLuint mVertexBuffer;
-    GLuint mIndexBuffer;
-
     float mHeight;
     float mWidth;
 
@@ -52,30 +43,30 @@ IRender* CreateApplication() {
 
 void DLApplication::UpdateAnimation(float timeStep) {
     if(!SceneAvailable()) return;
-    mSceneObject->UpdateAnimation(timeStep);
-    SceneRequest request = mSceneObject->getSceneRequest();
+    mScene->UpdateAnimation(timeStep);
+    SceneRequest request = mScene->getSceneRequest();
     if(request.Scene != 0) {
         SetupNextScene(request);
     }
 }
 
 void DLApplication::SetupNextScene(SceneRequest /*request*/) {
-    if(mSceneObject != nullptr) {
-        delete mSceneObject;
-        mSceneObject = nullptr;
+    if(mScene != nullptr) {
+        delete mScene;
+        mScene = nullptr;
     }
     DLScene *scene = new SplashScene();
     scene->setGlParams(mSimpleProgram);
     scene->Initialize(mWidth, mHeight);
-    mSceneObject = scene;
+    mScene = scene;
 }
 
 DLApplication::DLApplication() : mCurrentScene(SceneRequest(0)) {
-    mSceneObject = new SplashScene();
+    mScene = new SplashScene();
 }
 
 DLApplication::~DLApplication() {
-    delete mSceneObject;
+    delete mScene;
 }
 
 void DLApplication::Initialize(int width, int height) {
@@ -93,28 +84,28 @@ void DLApplication::Initialize(int width, int height) {
     mat4 projectionMatrix = mat4::Frustum(-1.6f, 1.6, -2.4, 2.4, 1, 100);
     glUniformMatrix4fv(projectionUniform, 1, 0, projectionMatrix.Pointer());
 
-    mSceneObject->setGlParams(mSimpleProgram);
-    mSceneObject->Initialize(width, height);
+    mScene->setGlParams(mSimpleProgram);
+    mScene->Initialize(width, height);
 }
 
 void DLApplication::Render() const {
     if(!SceneAvailable()) return;
-    mSceneObject->Render();
+    mScene->Render();
 }
 
 void DLApplication::OnRotate(DeviceOrientation newOrientation) {
     if(!SceneAvailable()) { return; }
-    mSceneObject->OnRotate(newOrientation);
+    mScene->OnRotate(newOrientation);
 }
 
 void DLApplication::OnFingerUp(ivec2 location) {
     if (!SceneAvailable()) { return; }
-    mSceneObject->OnFingerUp(location);
+    mScene->OnFingerUp(location);
 }
 
 void DLApplication::OnFingerDown(ivec2 location) {
     if (!SceneAvailable()) { return; }
-    mSceneObject->OnFingerUp(location);
+    mScene->OnFingerUp(location);
 }
 
 void DLApplication::OnFingerMove(ivec2 previous, ivec2 location) {
@@ -161,5 +152,5 @@ GLuint DLApplication::BuildProgram(const char* vertexShaderSource,
 }
 
 bool DLApplication::SceneAvailable() const {
-    return mSceneObject != nullptr;
+    return mScene != nullptr;
 }
