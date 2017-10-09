@@ -131,10 +131,10 @@ void SplashScene::DrawSquare(vec3 translate, vec4 color) const {
     glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
     
     GLsizei stride = sizeof(Vertex);
-    glVertexAttribPointer(positionSlot, 3, GL_FLOAT, GL_FALSE, stride, 0);
+    glVertexAttribPointer(positionSlot, 3, GL_FLOAT, GL_FALSE, stride, nullptr);
     glVertexAttrib4f(colorSlot, color.x, color.y, color.z, color.w);
     glEnableVertexAttribArray(positionSlot);
-    glDrawElements(GL_TRIANGLES, mSquare->getIndicesCount(), GL_UNSIGNED_BYTE, 0);
+    glDrawElements(GL_TRIANGLES, mSquare->getIndicesCount(), GL_UNSIGNED_BYTE, nullptr);
     glDisableVertexAttribArray(positionSlot);
 }
 
@@ -142,14 +142,14 @@ vec4 SplashScene::GetColorForIndex(int index) const {
     int col = deurell_logo[index];
     switch (col) {
         case 0:
-            return vec4(0,0,0,1);
+            return {0,0,0,1};
         case 1:
-            return vec4(1,1,1,1);
+            return {1,1,1,1};
         case 2:
-            return vec4(0.2f,0.2f,0.8f,1);
+            return {0.2f,0.2f,0.8f,1};
         case 3:
-            return vec4(1,1,0,1);
+            return {1,1,0,1};
         default:
-            return vec4(0,0,0,1);
+            return {0,0,0,1};
     }
 }

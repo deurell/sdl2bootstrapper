@@ -16,20 +16,20 @@ class DLScene : public IRender {
 
 public:
     DLScene();
-    ~DLScene() = default;
+    ~DLScene() override = default;
     SceneRequest getSceneRequest();
 
     void setGlParams(GLuint program);
 
 protected:
     // IRender
-    virtual void Initialize(int width, int height);
-    virtual void Render() const {}
-    virtual void UpdateAnimation(float timeStep) {}
-    virtual void OnRotate(DeviceOrientation newOrientation) {}
-    virtual void OnFingerUp(ivec2 location) {}
-    virtual void OnFingerDown(ivec2 location) {}
-    virtual void OnFingerMove(ivec2 oldLocation, ivec2 newLocation) {}
+    void Initialize(int width, int height) override;
+    void Render() const override;
+    void UpdateAnimation(float timeStep) override {}
+    void OnRotate(DeviceOrientation newOrientation) override {}
+    void OnFingerUp(ivec2 location) override {}
+    void OnFingerDown(ivec2 location) override {}
+    void OnFingerMove(ivec2 oldLocation, ivec2 newLocation) override {}
 
     int getSceneIdentifier();
     void requestScene(SceneRequest scene);

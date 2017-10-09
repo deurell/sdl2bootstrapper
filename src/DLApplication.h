@@ -30,11 +30,13 @@ private:
     DLScene *mScene;
     GLuint BuildShader(const char* source, GLenum shaderType) const;
     GLuint BuildProgram(const char* vShader, const char* fShader) const;
-    GLuint mSimpleProgram;
-    float mHeight;
-    float mWidth;
+    GLuint mSimpleProgram{};
+    float mHeight{};
+    float mWidth{};
     SceneRequest mCurrentScene;
 };
+
+void DLScene::Render() const {}
 
 IRender* CreateApplication() {
     return new DLApplication();
@@ -113,7 +115,7 @@ void DLApplication::OnFingerMove(ivec2 oldLocation, ivec2 newLocation) {
 
 GLuint DLApplication::BuildShader(const char* source, GLenum shaderType) const {
     GLuint shaderHandle = glCreateShader(shaderType);
-    glShaderSource(shaderHandle, 1, &source, 0);
+    glShaderSource(shaderHandle, 1, &source, nullptr);
     glCompileShader(shaderHandle);
 
     GLint compileSuccess;
@@ -121,7 +123,7 @@ GLuint DLApplication::BuildShader(const char* source, GLenum shaderType) const {
 
     if (compileSuccess == GL_FALSE) {
         GLchar messages[256];
-        glGetShaderInfoLog(shaderHandle, sizeof(messages), 0, &messages[0]);
+        glGetShaderInfoLog(shaderHandle, sizeof(messages), nullptr, &messages[0]);
         std::cout << messages;
         exit(1);
     }
@@ -143,7 +145,7 @@ GLuint DLApplication::BuildProgram(const char* vShader,
     glGetProgramiv(programHandle, GL_LINK_STATUS, &linkSuccess);
     if (linkSuccess == GL_FALSE) {
         GLchar messages[256];
-        glGetProgramInfoLog(programHandle, sizeof(messages), 0, &messages[0]);
+        glGetProgramInfoLog(programHandle, sizeof(messages), nullptr, &messages[0]);
         std::cout << messages;
         exit(1);
     }

@@ -12,6 +12,6 @@ struct Animation {
     Quaternion Start;
     Quaternion End;
     Quaternion Current;
-    float Elapsed;
-    float Duration;
+    float Elapsed = 0;
+    float Duration = 0;
 };

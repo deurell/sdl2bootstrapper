@@ -21,9 +21,9 @@ public:
     ~SplashScene() override;
 
 protected:
-    virtual void Initialize(int width, int height);
-    virtual void Render() const;
-    virtual void UpdateAnimation(float timeStep);
+    void Initialize(int width, int height) override;
+    void Render() const override;
+    void UpdateAnimation(float timeStep) override;
 
 private:
     void DrawLogo() const;
