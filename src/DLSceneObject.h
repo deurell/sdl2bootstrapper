@@ -19,7 +19,7 @@ public:
     ~DLSceneObject() = default;
     SceneRequest getSceneRequest();
 
-    void setGlParams(GLuint program, GLuint frameBuffer, GLuint colorBuffer, GLuint depthBuffer);
+    void setGlParams(GLuint program);
 
 protected:
     // IRender

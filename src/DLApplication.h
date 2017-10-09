@@ -12,15 +12,15 @@ using namespace std;
 class DLApplication : public IRender {
 public:
     DLApplication();
-    ~DLApplication();
+    ~DLApplication() override;
 
-    void Initialize(int width, int height);
-    void Render() const;
-    void UpdateAnimation(float timeStep);
-    void OnRotate(DeviceOrientation newOrientation);
-    void OnFingerUp(ivec2 location);
-    void OnFingerDown(ivec2 location);
-    void OnFingerMove(ivec2 oldLocation, ivec2 newLocation);
+    void Initialize(int width, int height) override;
+    void Render() const override;
+    void UpdateAnimation(float timeStep) override;
+    void OnRotate(DeviceOrientation newOrientation) override;
+    void OnFingerUp(ivec2 location) override;
+    void OnFingerDown(ivec2 location) override;
+    void OnFingerMove(ivec2 oldLocation, ivec2 newLocation) override;
 
     bool SceneAvailable() const;
 
@@ -65,15 +65,13 @@ void DLApplication::SetupNextScene(SceneRequest /*request*/) {
         mSceneObject = nullptr;
     }
     DLSceneObject *scene = new SplashScene();
-    scene->setGlParams(mSimpleProgram, mFramebuffer, mColorRenderbuffer, mDepthRenderbuffer);
+    scene->setGlParams(mSimpleProgram);
     scene->Initialize(mWidth, mHeight);
     mSceneObject = scene;
 }
 
 DLApplication::DLApplication() : mCurrentScene(SceneRequest(0)) {
     mSceneObject = new SplashScene();
-    glGenRenderbuffers(1, &mColorRenderbuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, mColorRenderbuffer);
 }
 
 DLApplication::~DLApplication() {
@@ -83,31 +81,6 @@ DLApplication::~DLApplication() {
 void DLApplication::Initialize(int width, int height) {
     mHeight = height;
     mWidth = width;
-    // Create the depth buffer.
-    glGenRenderbuffers(1, &mDepthRenderbuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, mDepthRenderbuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER,
-                             GL_DEPTH_COMPONENT16,
-                             width,
-                             height);
-
-    // Create the framebuffer object; attach the depth and color buffers.
-    glGenFramebuffers(1, &mFramebuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, mFramebuffer);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER,
-                                 GL_COLOR_ATTACHMENT0,
-                                 GL_RENDERBUFFER,
-                                 mColorRenderbuffer);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER,
-                                 GL_DEPTH_ATTACHMENT,
-                                 GL_RENDERBUFFER,
-                                 mDepthRenderbuffer);
-
-    // Bind the color buffer for rendering.
-    glBindRenderbuffer(GL_RENDERBUFFER, mColorRenderbuffer);
-
-    glViewport(0, 0, width, height);
-    glEnable(GL_DEPTH_TEST);
 
     mSimpleProgram = BuildProgram(SimpleVertexShader, SimpleFragmentShader);
     glUseProgram(mSimpleProgram);
@@ -117,7 +90,7 @@ void DLApplication::Initialize(int width, int height) {
     mat4 projectionMatrix = mat4::Frustum(-1.6f, 1.6, -2.4, 2.4, 1, 100);
     glUniformMatrix4fv(projectionUniform, 1, 0, projectionMatrix.Pointer());
 
-    mSceneObject->setGlParams(mSimpleProgram, mFramebuffer, mColorRenderbuffer, mDepthRenderbuffer);
+    mSceneObject->setGlParams(mSimpleProgram);
     mSceneObject->Initialize(width, height);
 }
 

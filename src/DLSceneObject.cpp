@@ -7,12 +7,9 @@
 
 #include "DLSceneObject.h"
 
-DLSceneObject::DLSceneObject() : mSceneRequest(SceneRequest(0)),
-                         mFramebuffer(0),
-                         mColorRenderbuffer(0),
-                         mDepthRenderbuffer(0),
-                         mSceneIdentifier(0)
-{}
+DLSceneObject::DLSceneObject() :
+        mSceneRequest(SceneRequest(0)),
+        mSceneIdentifier(0) {}
 
 int DLSceneObject::getSceneIdentifier() {
     return mSceneIdentifier;
@@ -22,11 +19,8 @@ void DLSceneObject::requestScene(SceneRequest scene) {
     mSceneRequest = scene;
 }
 
-void DLSceneObject::setGlParams(GLuint program, GLuint frameBuffer, GLuint colorBuffer, GLuint depthBuffer) {
+void DLSceneObject::setGlParams(GLuint program) {
     mSimpleProgram = program;
-    mFramebuffer = frameBuffer;
-    mColorRenderbuffer = colorBuffer;
-    mDepthRenderbuffer = depthBuffer;
 }
 
 void DLSceneObject::Initialize(int width, int height) {

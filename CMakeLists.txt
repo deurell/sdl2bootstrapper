@@ -16,7 +16,7 @@ set(SOURCE_FILES
         src/Animation.h
         src/Camera.h
         src/Camera.cpp
-        src/DLApplication.cpp
+        src/DLApplication.h
         src/DLSceneObject.h
         src/DLSceneObject.cpp
         src/IRender.hpp
