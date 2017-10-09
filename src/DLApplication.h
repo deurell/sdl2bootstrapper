@@ -107,7 +107,7 @@ void DLApplication::OnFingerDown(ivec2 location) {
     mScene->OnFingerUp(location);
 }
 
-void DLApplication::OnFingerMove(ivec2 previous, ivec2 location) {
+void DLApplication::OnFingerMove(ivec2 oldLocation, ivec2 newLocation) {
     if (!SceneAvailable()) { return; }
 }
 
@@ -129,10 +129,10 @@ GLuint DLApplication::BuildShader(const char* source, GLenum shaderType) const {
     return shaderHandle;
 }
 
-GLuint DLApplication::BuildProgram(const char* vertexShaderSource,
-                                      const char* fragmentShaderSource) const {
-    GLuint vertexShader = BuildShader(vertexShaderSource, GL_VERTEX_SHADER);
-    GLuint fragmentShader = BuildShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
+GLuint DLApplication::BuildProgram(const char* vShader,
+                                      const char* fShader) const {
+    GLuint vertexShader = BuildShader(vShader, GL_VERTEX_SHADER);
+    GLuint fragmentShader = BuildShader(fShader, GL_FRAGMENT_SHADER);
 
     GLuint programHandle = glCreateProgram();
     glAttachShader(programHandle, vertexShader);
