@@ -35,9 +35,6 @@ protected:
     void requestScene(SceneRequest scene);
 
     GLuint mSimpleProgram;
-    GLuint mFramebuffer;
-    GLuint mColorRenderbuffer;
-    GLuint mDepthRenderbuffer;
     float mHeight;
     float mWidth;
 

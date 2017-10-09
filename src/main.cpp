@@ -8,6 +8,7 @@ static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
 static SDL_Window *window = nullptr;
 static SDL_GLContext context;
+static const int FRAMES_PER_SECOND = 60;
 
 static void sdlDie(const char *message) {
     fprintf(stderr, "%s: %s\n", message, SDL_GetError());
@@ -65,10 +66,15 @@ int main(int argc, char *argv[]) {
             if (event.type == SDL_QUIT) { quit = true; }
         }
         Uint32 currentTime = SDL_GetTicks();
-        float delta = (currentTime - lastTime) / 1000.0f;
+        float delta = currentTime - lastTime;
         lastTime = currentTime;
-        application->UpdateAnimation(delta);
+
+        application->UpdateAnimation(delta/1000);
         application->Render();
+
+        if (delta < 1000 / FRAMES_PER_SECOND) {
+            SDL_Delay((1000 / FRAMES_PER_SECOND) - delta);
+        }
         SDL_GL_SwapWindow(window);
     }
 

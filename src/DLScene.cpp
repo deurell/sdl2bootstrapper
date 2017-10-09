@@ -9,7 +9,10 @@
 
 DLScene::DLScene() :
         mSceneRequest(SceneRequest(0)),
-        mSceneIdentifier(0) {}
+        mSceneIdentifier(0),
+        mWidth(0),
+        mHeight(0)
+{}
 
 int DLScene::getSceneIdentifier() {
     return mSceneIdentifier;
