@@ -21,7 +21,7 @@ struct IRender {
     virtual void OnFingerUp(ivec2 location) = 0;
     virtual void OnFingerDown(ivec2 location) = 0;
     virtual void OnFingerMove(ivec2 oldLocation, ivec2 newLocation) = 0;
-    virtual ~IRender() {}
+    virtual ~IRender() = default;
 };
 
 IRender* CreateApplication();

@@ -18,7 +18,7 @@ class SplashScene : public DLScene {
     
 public:
     SplashScene();
-    virtual ~SplashScene();
+    ~SplashScene() override;
 
 protected:
     virtual void Initialize(int width, int height);
