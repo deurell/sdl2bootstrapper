@@ -25,7 +25,7 @@ public:
     bool SceneAvailable() const;
 
 private:
-    DLSceneObject *mSceneObject;
+    DLScene *mSceneObject;
 
     GLuint BuildShader(const char* source, GLenum shaderType) const;
     GLuint BuildProgram(const char* vShader, const char* fShader) const;
@@ -64,7 +64,7 @@ void DLApplication::SetupNextScene(SceneRequest /*request*/) {
         delete mSceneObject;
         mSceneObject = nullptr;
     }
-    DLSceneObject *scene = new SplashScene();
+    DLScene *scene = new SplashScene();
     scene->setGlParams(mSimpleProgram);
     scene->Initialize(mWidth, mHeight);
     mSceneObject = scene;

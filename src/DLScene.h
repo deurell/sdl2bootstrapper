@@ -1,5 +1,5 @@
 //
-//  DLSceneObject.h
+//  DLScene.h
 //  TouchCone
 //
 //  Created by Mikael Deurell on 12/06/2012.
@@ -12,11 +12,11 @@
 #include <glad/glad.h>
 #include "IRender.hpp"
 
-class DLSceneObject : public IRender {
+class DLScene : public IRender {
 
 public:
-    DLSceneObject();
-    ~DLSceneObject() = default;
+    DLScene();
+    ~DLScene() = default;
     SceneRequest getSceneRequest();
 
     void setGlParams(GLuint program);

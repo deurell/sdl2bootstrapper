@@ -8,13 +8,13 @@
 #pragma once
 
 #include <iostream>
-#include "DLSceneObject.h"
+#include "DLScene.h"
 #include "Quaternion.h"
 #include "Square.h"
 #include "Animation.h"
 #include "Camera.h"
 
-class SplashScene : public DLSceneObject {
+class SplashScene : public DLScene {
     
 public:
     SplashScene();

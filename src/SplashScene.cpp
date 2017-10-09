@@ -75,9 +75,9 @@ void SplashScene::UpdateAnimation(float timeStep) {
     float wobbleDegree = timeStep * 25;
     mDepthDegree += wobbleDegree;
 
-    float z = static_cast<float>(30 * sin(DEGREES_TO_RADIANS(mCameraDegree)));
-    float y = static_cast<float>(30 * cos(DEGREES_TO_RADIANS(mCameraDegree)));
-    float wobble = static_cast<float>(40 * sin(DEGREES_TO_RADIANS(mDepthDegree)));
+    auto z = static_cast<float>(30 * sin(DEGREES_TO_RADIANS(mCameraDegree)));
+    auto y = static_cast<float>(30 * cos(DEGREES_TO_RADIANS(mCameraDegree)));
+    auto wobble = static_cast<float>(40 * sin(DEGREES_TO_RADIANS(mDepthDegree)));
     mCamera->setPosition(Vector3<float>(0,y,z-30));
     mCamera->setRotation(Vector3<float>(270+mCameraDegree, wobble, -wobble));
 }

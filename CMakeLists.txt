@@ -17,8 +17,8 @@ set(SOURCE_FILES
         src/Camera.h
         src/Camera.cpp
         src/DLApplication.h
-        src/DLSceneObject.h
-        src/DLSceneObject.cpp
+        src/DLScene.h
+        src/DLScene.cpp
         src/IRender.hpp
         src/Matrix.h
         src/Quaternion.h
