@@ -8,9 +8,6 @@
 
 #include "SplashScene.h"
 
-#define M_PI 3.14159265353
-#define DEGREES_TO_RADIANS(degrees) ((degrees) * (M_PI / 180))
-
 static const int ColumnCount = 30;
 static const int RowCount = 9;
 
@@ -69,19 +66,19 @@ void SplashScene::Initialize(int width, int height) {
 }
 
 void SplashScene::UpdateAnimation(float timeStep) {
-    float cameraDegree = timeStep * 45.0f;
+    float cameraDegree = timeStep * (Pi/180*45.0f);
     float val = mCameraDegree + cameraDegree;
-    mCameraDegree = static_cast<float>(fmod(val, 360));
+    mCameraDegree = fmod(val, TwoPi);
 
-    float wobbleDegree = timeStep * 25.0f;
+    float wobbleDegree = timeStep * (Pi/180*25.0f);
     val = mDepthDegree + wobbleDegree;
-    mDepthDegree = static_cast<float>(fmod(val, 360));
+    mDepthDegree = fmod(val, TwoPi);
 
-    auto z = static_cast<float>(30 * sin(DEGREES_TO_RADIANS(mCameraDegree)));
-    auto y = static_cast<float>(30 * cos(DEGREES_TO_RADIANS(mCameraDegree)));
-    auto wobble = static_cast<float>(40 * sin(DEGREES_TO_RADIANS(mDepthDegree)));
-    mCamera->setPosition(Vector3<float>(0,y,z-30));
-    mCamera->setRotation(Vector3<float>(270+mCameraDegree, wobble, -wobble));
+    auto z = 30 * sin(mCameraDegree);
+    auto y = 30 * cos(mCameraDegree);
+    auto wobble = (Pi/180*40) * sin(mDepthDegree);
+    mCamera->setPosition(Vector3<float>(0, y, z-30));
+    mCamera->setRotation(Vector3<float>((Pi/180*270) + mCameraDegree, wobble, -wobble));
 }
 
 void SplashScene::Render() const {
@@ -93,7 +90,7 @@ void SplashScene::Render() const {
 void SplashScene::DrawLogo() const {
     int index = 0;
     float zpos = -30;
-    float rad = mDepthDegree / 180 * Pi;
+    float rad = mDepthDegree;
     vec4 color(1,1,1,1);
     float const column_offset = 4;
     float const row_offset = 4;

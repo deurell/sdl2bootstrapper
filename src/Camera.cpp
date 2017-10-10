@@ -7,8 +7,6 @@
 
 #include "Camera.h"
 #include "Quaternion.h"
-#define M_PI 3.1415926535
-#define DEGREES_TO_RADIANS(degrees) ((degrees) * (M_PI / 180))
 
 Camera::Camera() :
     mPosition(Vector3<float>(0,0,0)),
@@ -32,9 +30,9 @@ void Camera::setRotation(Vector3<float> rotation) {
 }
 
 Matrix4<float> Camera::toMatrix() {
-    float xw = DEGREES_TO_RADIANS(mRotation.x);
-    float yw = DEGREES_TO_RADIANS(mRotation.y);
-    float zw = DEGREES_TO_RADIANS(mRotation.z);
+    float xw =mRotation.x;
+    float yw = mRotation.y;
+    float zw = mRotation.z;
     Quaternion zrq = Quaternion::CreateFromAxisAngle(vec3(0,0,1), -zw);
     Quaternion xrq = Quaternion::CreateFromAxisAngle(vec3(1,0,0), -xw);
     Quaternion yrq = Quaternion::CreateFromAxisAngle(vec3(0,1,0), -yw);
