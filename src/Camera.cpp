@@ -30,7 +30,7 @@ void Camera::setRotation(Vector3<float> rotation) {
 }
 
 Matrix4<float> Camera::toMatrix() {
-    float xw =mRotation.x;
+    float xw = mRotation.x;
     float yw = mRotation.y;
     float zw = mRotation.z;
     Quaternion zrq = Quaternion::CreateFromAxisAngle(vec3(0,0,1), -zw);

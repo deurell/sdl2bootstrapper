@@ -7,8 +7,6 @@
 //
 
 #include "Square.h"
-#include "Vector.h"
-#include <vector>
 
 const Vertex Vertices[] = {
     vec3(-1,1,-1),vec4(1,1,1,0.5f),
