@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
     glViewport(0, 0, width, height);
     glEnable(GL_DEPTH_TEST);
 
-    auto application = CreateApplication();
+    DLApplication* application =  new DLApplication();
     application->Initialize(width, height);
 
     Uint32 lastTime = 0;
@@ -84,5 +84,6 @@ int main(int argc, char *argv[]) {
     SDL_DestroyWindow(window);
     window = nullptr;
     SDL_Quit();
+    delete application;
     return 0;
 }

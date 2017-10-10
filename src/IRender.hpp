@@ -23,5 +23,3 @@ struct IRender {
     virtual void OnFingerMove(ivec2 oldLocation, ivec2 newLocation) = 0;
     virtual ~IRender() = default;
 };
-
-IRender* CreateApplication();
