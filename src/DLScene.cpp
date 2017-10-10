@@ -31,6 +31,8 @@ void DLScene::Initialize(int width, int height) {
     mHeight = height;
 }
 
+void DLScene::Render() const {}
+
 SceneRequest DLScene::getSceneRequest() {
     return mSceneRequest;
 }

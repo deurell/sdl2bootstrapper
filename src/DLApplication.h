@@ -36,8 +36,6 @@ private:
     SceneRequest mCurrentScene;
 };
 
-void DLScene::Render() const {}
-
 IRender* CreateApplication() {
     return new DLApplication();
 }
