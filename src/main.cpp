@@ -4,11 +4,12 @@
 #include "DLApplication.h"
 #include <SDL2/SDL.h>
 
-static const int SCREEN_WIDTH = 960;
-static const int SCREEN_HEIGHT = 540;
 static SDL_Window *window = nullptr;
 static SDL_GLContext context;
-static const int FRAMES_PER_SECOND = 60;
+
+constexpr int FRAMES_PER_SECOND = 60;
+constexpr int SCREEN_WIDTH = 960;
+constexpr int SCREEN_HEIGHT = 540;
 
 static void sdlDie(const char *message) {
     fprintf(stderr, "%s: %s\n", message, SDL_GetError());
