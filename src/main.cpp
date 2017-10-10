@@ -54,7 +54,6 @@ int main(int argc, char *argv[]) {
 
     int width, height;
     SDL_GetWindowSize(window, &width, &height);
-
     glViewport(0, 0, width, height);
     glEnable(GL_DEPTH_TEST);
 
@@ -69,10 +68,10 @@ int main(int argc, char *argv[]) {
             if (event.type == SDL_QUIT) { quit = true; }
         }
         Uint32 currentTime = SDL_GetTicks();
-        float delta = currentTime - lastTime;
+        Uint32 delta = currentTime - lastTime;
         lastTime = currentTime;
 
-        application->UpdateAnimation(delta/1000);
+        application->UpdateAnimation(delta / 1000.0f);
         application->Render();
 
         if (delta < 1000 / FRAMES_PER_SECOND) {
