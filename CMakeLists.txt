@@ -17,19 +17,18 @@ set(SOURCE_FILES
         src/Camera.h
         src/Camera.cpp
         src/DLApplication.h
-        src/DLSceneObject.h
-        src/DLSceneObject.cpp
+        src/DLScene.h
+        src/DLScene.cpp
         src/IRender.hpp
         src/Matrix.h
         src/Quaternion.h
         src/SceneRequest.h
-        src/SceneRequest.cpp
         src/SplashScene.h
         src/SplashScene.cpp
         src/Square.h
         src/Square.cpp
         src/Vector.h
-        )
+        src/DLApplication.cpp)
 
 add_executable(sdl2_glad ${SOURCE_FILES})
 

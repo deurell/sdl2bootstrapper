@@ -8,27 +8,31 @@
 #pragma once
 
 #include <iostream>
-#include "DLSceneObject.h"
+#include "DLScene.h"
 #include "Quaternion.h"
 #include "Square.h"
 #include "Animation.h"
 #include "Camera.h"
 
-class SplashScene : public DLSceneObject {
+class SplashScene : public DLScene {
     
 public:
     SplashScene();
-    virtual ~SplashScene();
+    ~SplashScene() override;
 
 protected:
-    virtual void Initialize(int width, int height);
-    virtual void Render() const;
-    virtual void UpdateAnimation(float timeStep);
+    void Initialize(int width, int height) override;
+    void Render() const override;
+    void UpdateAnimation(float timeStep) override;
 
 private:
-    GLfloat mDepthDegree;
-    GLfloat mRotationAngle;
-    GLfloat mCameraDegree;
+    void DrawLogo() const;
+    void DrawSquare(vec3 transform, vec4 color) const;
+    vec4 GetColorForIndex(int index) const;
+
+    float mDepthDegree;
+    float mRotationAngle;
+    float mCameraDegree;
     GLfloat mScale;
     GLfloat mDevice;
 
@@ -38,8 +42,4 @@ private:
     float mCoolness;
     Square* mSquare;
     Camera * mCamera;
-    
-    void DrawLogo() const;
-    void DrawSquare(vec3 transform, vec4 color) const;
-    vec4 GetColorForIndex(int index) const;
 };

@@ -123,8 +123,8 @@ struct Matrix4 {
         m.w.x = 0; m.w.y = 0; m.w.z = 0; m.w.w = 1;
         return m;
     }
-    static Matrix4<T> Rotate(T degrees) {
-        T radians = degrees * 3.14159f / 180.0f;
+    static Matrix4<T> Rotate(T rad) {
+        T radians = rad;
         T s = std::sin(radians);
         T c = std::cos(radians);
         

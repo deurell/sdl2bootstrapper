@@ -8,9 +8,9 @@
 
 #pragma once
 
-struct SceneRequest {    
+struct SceneRequest {
     int Scene;
-    SceneRequest(int sceneId) {
+    explicit SceneRequest(int sceneId) {
         Scene = sceneId;
     }
 };

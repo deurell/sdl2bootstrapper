@@ -8,9 +8,6 @@
 
 #include "SplashScene.h"
 
-#define M_PI 3.14159265353
-#define DEGREES_TO_RADIANS(degrees) ((degrees) * (M_PI / 180))
-
 static const int ColumnCount = 30;
 static const int RowCount = 9;
 
@@ -69,17 +66,19 @@ void SplashScene::Initialize(int width, int height) {
 }
 
 void SplashScene::UpdateAnimation(float timeStep) {
-    float cameraDegree = timeStep * 45;
-    mCameraDegree += cameraDegree;
+    float cameraDegree = timeStep * (Pi/180*45.0f);
+    float val = mCameraDegree + cameraDegree;
+    mCameraDegree = fmod(val, TwoPi);
 
-    float wobbleDegree = timeStep * 25;
-    mDepthDegree += wobbleDegree;
+    float wobbleDegree = timeStep * (Pi/180*25.0f);
+    val = mDepthDegree + wobbleDegree;
+    mDepthDegree = fmod(val, TwoPi);
 
-    float z = static_cast<float>(30 * sin(DEGREES_TO_RADIANS(mCameraDegree)));
-    float y = static_cast<float>(30 * cos(DEGREES_TO_RADIANS(mCameraDegree)));
-    float wobble = static_cast<float>(40 * sin(DEGREES_TO_RADIANS(mDepthDegree)));
-    mCamera->setPosition(Vector3<float>(0,y,z-30));
-    mCamera->setRotation(Vector3<float>(270+mCameraDegree, wobble, -wobble));
+    auto z = 30 * sin(mCameraDegree);
+    auto y = 30 * cos(mCameraDegree);
+    auto wobble = (Pi/180*40) * sin(mDepthDegree);
+    mCamera->setPosition(Vector3<float>(0, y, z-30));
+    mCamera->setRotation(Vector3<float>((Pi/180*270) + mCameraDegree, wobble, -wobble));
 }
 
 void SplashScene::Render() const {
@@ -91,7 +90,7 @@ void SplashScene::Render() const {
 void SplashScene::DrawLogo() const {
     int index = 0;
     float zpos = -30;
-    float rad = mDepthDegree / 180 * Pi;
+    float rad = mDepthDegree;
     vec4 color(1,1,1,1);
     float const column_offset = 4;
     float const row_offset = 4;
@@ -131,10 +130,10 @@ void SplashScene::DrawSquare(vec3 translate, vec4 color) const {
     glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
     
     GLsizei stride = sizeof(Vertex);
-    glVertexAttribPointer(positionSlot, 3, GL_FLOAT, GL_FALSE, stride, 0);
+    glVertexAttribPointer(positionSlot, 3, GL_FLOAT, GL_FALSE, stride, nullptr);
     glVertexAttrib4f(colorSlot, color.x, color.y, color.z, color.w);
     glEnableVertexAttribArray(positionSlot);
-    glDrawElements(GL_TRIANGLES, mSquare->getIndicesCount(), GL_UNSIGNED_BYTE, 0);
+    glDrawElements(GL_TRIANGLES, mSquare->getIndicesCount(), GL_UNSIGNED_BYTE, nullptr);
     glDisableVertexAttribArray(positionSlot);
 }
 
@@ -142,14 +141,14 @@ vec4 SplashScene::GetColorForIndex(int index) const {
     int col = deurell_logo[index];
     switch (col) {
         case 0:
-            return vec4(0,0,0,1);
+            return {0,0,0,1};
         case 1:
-            return vec4(1,1,1,1);
+            return {1,1,1,1};
         case 2:
-            return vec4(0.2f,0.2f,0.8f,1);
+            return {0.2f,0.2f,0.8f,1};
         case 3:
-            return vec4(1,1,0,1);
+            return {1,1,0,1};
         default:
-            return vec4(0,0,0,1);
+            return {0,0,0,1};
     }
 }
