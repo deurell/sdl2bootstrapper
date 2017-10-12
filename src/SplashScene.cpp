@@ -130,11 +130,15 @@ void SplashScene::DrawSquare(vec3 translate, vec4 color) const {
     glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
     
     GLsizei stride = sizeof(Vertex);
+    const GLvoid* colorOffset = (GLvoid*) sizeof(vec3);
     glVertexAttribPointer(positionSlot, 3, GL_FLOAT, GL_FALSE, stride, nullptr);
+    //glVertexAttribPointer(colorSlot, 4, GL_FLOAT, GL_FALSE, stride, colorOffset);
     glVertexAttrib4f(colorSlot, color.x, color.y, color.z, color.w);
     glEnableVertexAttribArray(positionSlot);
+    //glEnableVertexAttribArray(colorSlot);
     glDrawElements(GL_TRIANGLES, mSquare->getIndicesCount(), GL_UNSIGNED_BYTE, nullptr);
     glDisableVertexAttribArray(positionSlot);
+    //glDisableVertexAttribArray(colorSlot);
 }
 
 vec4 SplashScene::GetColorForIndex(int index) const {
