@@ -7,18 +7,16 @@
 //
 
 #include "Square.h"
-#include "Vector.h"
-#include <vector>
 
 const Vertex Vertices[] = {
-    vec3(-1,1,-1),vec4(1,1,1,0.5f),
-    vec3(1,1,-1),vec4(1,1,1,0.5f),
-    vec3(-1,-1,-1),vec4(1,1,1,0.5f),
-    vec3(1,-1,-1),vec4(1,1,1,0.5f),
-    vec3(-1,1,1),vec4(1,1,1,0.5f),
-    vec3(1,1,1),vec4(1,1,1,0.5f),
-    vec3(-1,-1,1),vec4(1,1,1,0.5f),
-    vec3(1,-1,1),vec4(1,1,1,0.5f)
+    vec3(-1,1,-1),vec4(1,1,1,1),
+    vec3(1,1,-1),vec4(1,1,1,1),
+    vec3(-1,-1,-1),vec4(1,1,1,1),
+    vec3(1,-1,-1),vec4(1,1,1,1),
+    vec3(-1,1,1),vec4(1,1,1,1),
+    vec3(1,1,1),vec4(1,1,1,1),
+    vec3(-1,-1,1),vec4(1,1,1,1),
+    vec3(1,-1,1),vec4(1,1,1,1)
 };
 
 const GLubyte Indices[] = {
@@ -65,7 +63,7 @@ void Square::GenerateVertices(vector<Vertex>& vertices, vector<GLubyte>& indices
         current.Position.y = current.Position.y * m_scale.y;
         current.Position.z = current.Position.z * m_scale.z;
         current.Position += m_offset;
-        current.Color = color;
+        current.Color = current.Color;
         vertices.push_back(current);
     }
 

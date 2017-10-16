@@ -11,7 +11,7 @@
 static const int ColumnCount = 30;
 static const int RowCount = 9;
 
-static const int deurell_logo[] = {
+static const int logo[] = {
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
     0,1,1,0,0,1,1,1,0,1,0,1,0,1,1,0,0,1,0,0,0,1,0,1,1,1,0,1,1,1,
     0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0,1,1,1,
@@ -54,7 +54,7 @@ void SplashScene::Initialize(int width, int height) {
     glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, cubeVertices.size() * sizeof(cubeVertices[0]),
                  &cubeVertices[0], GL_STATIC_DRAW);
-    
+
     glGenBuffers(1, &mIndexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, cubeIndices.size() * sizeof(cubeIndices[0]),
@@ -62,7 +62,6 @@ void SplashScene::Initialize(int width, int height) {
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
 }
 
 void SplashScene::UpdateAnimation(float timeStep) {
@@ -89,7 +88,7 @@ void SplashScene::Render() const {
 
 void SplashScene::DrawLogo() const {
     int index = 0;
-    float zpos = -30;
+    float zPos = -30;
     float rad = mDepthDegree;
     vec4 color(1,1,1,1);
     float const column_offset = 4;
@@ -101,7 +100,7 @@ void SplashScene::DrawLogo() const {
             float r = (row - RowCount / 2.0f) * row_offset;
             float degAdd = index * mCoolness * (Pi / 180);
             float amp = 8 * cos(rad + degAdd);
-            DrawSquare(vec3(c, -r, zpos + amp), color);
+            DrawSquare(vec3(c, -r, zPos + amp), color);
             index++;
         }
     }
@@ -130,15 +129,21 @@ void SplashScene::DrawSquare(vec3 translate, vec4 color) const {
     glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
     
     GLsizei stride = sizeof(Vertex);
+    //auto offset = reinterpret_cast<void*>(sizeof(vec3));
     glVertexAttribPointer(positionSlot, 3, GL_FLOAT, GL_FALSE, stride, nullptr);
+    //glVertexAttribPointer(colorSlot, 4, GL_FLOAT, GL_FALSE, stride, offset);
     glVertexAttrib4f(colorSlot, color.x, color.y, color.z, color.w);
     glEnableVertexAttribArray(positionSlot);
+    //glEnableVertexAttribArray(colorSlot);
     glDrawElements(GL_TRIANGLES, mSquare->getIndicesCount(), GL_UNSIGNED_BYTE, nullptr);
+    //glDisableVertexAttribArray(colorSlot);
     glDisableVertexAttribArray(positionSlot);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 vec4 SplashScene::GetColorForIndex(int index) const {
-    int col = deurell_logo[index];
+    int col = logo[index];
     switch (col) {
         case 0:
             return {0,0,0,1};

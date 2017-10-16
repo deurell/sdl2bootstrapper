@@ -34,8 +34,8 @@ private:
     GLuint BuildShader(const char* source, GLenum shaderType) const;
     GLuint BuildProgram(const char* vShader, const char* fShader) const;
     GLuint mSimpleProgram{};
-    float mHeight{};
-    float mWidth{};
+    int mHeight{};
+    int mWidth{};
     SceneRequest mCurrentScene;
 };
 

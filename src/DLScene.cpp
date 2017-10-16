@@ -14,15 +14,15 @@ DLScene::DLScene() :
         mHeight(0)
 {}
 
-int DLScene::getSceneIdentifier() {
+int DLScene::GetSceneIdentifier() {
     return mSceneIdentifier;
 }
 
-void DLScene::requestScene(SceneRequest scene) {
+void DLScene::RequestScene(SceneRequest scene) {
     mSceneRequest = scene;
 }
 
-void DLScene::setGlParams(GLuint program) {
+void DLScene::SetShaders(GLuint program) {
     mSimpleProgram = program;
 }
 
@@ -33,6 +33,6 @@ void DLScene::Initialize(int width, int height) {
 
 void DLScene::Render() const {}
 
-SceneRequest DLScene::getSceneRequest() {
+SceneRequest DLScene::GetSceneRequest() {
     return mSceneRequest;
 }

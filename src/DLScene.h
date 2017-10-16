@@ -17,9 +17,9 @@ class DLScene : public IRender {
 public:
     DLScene();
     ~DLScene() override = default;
-    SceneRequest getSceneRequest();
+    SceneRequest GetSceneRequest();
 
-    void setGlParams(GLuint program);
+    void SetShaders(GLuint program);
 
 protected:
     // IRender
@@ -31,12 +31,12 @@ protected:
     void OnFingerDown(ivec2 location) override {}
     void OnFingerMove(ivec2 oldLocation, ivec2 newLocation) override {}
 
-    int getSceneIdentifier();
-    void requestScene(SceneRequest scene);
+    int GetSceneIdentifier();
+    void RequestScene(SceneRequest scene);
 
     GLuint mSimpleProgram;
-    float mHeight;
-    float mWidth;
+    int mHeight;
+    int mWidth;
 
 private:
     int mSceneIdentifier;

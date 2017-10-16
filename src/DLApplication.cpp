@@ -5,7 +5,7 @@
 void DLApplication::UpdateAnimation(float timeStep) {
     if(!SceneAvailable()) return;
     mScene->UpdateAnimation(timeStep);
-    SceneRequest request = mScene->getSceneRequest();
+    SceneRequest request = mScene->GetSceneRequest();
     if(request.Scene != 0) {
         SetupNextScene(request);
     }
@@ -17,7 +17,7 @@ void DLApplication::SetupNextScene(SceneRequest /*request*/) {
         mScene = nullptr;
     }
     DLScene *scene = new SplashScene();
-    scene->setGlParams(mSimpleProgram);
+    scene->SetShaders(mSimpleProgram);
     scene->Initialize(mWidth, mHeight);
     mScene = scene;
 }
@@ -39,10 +39,10 @@ void DLApplication::Initialize(int width, int height) {
 
     // Set the projection matrix.
     GLint projectionUniform = glGetUniformLocation(mSimpleProgram, "Projection");
-    mat4 projectionMatrix = mat4::Frustum(-1.6f, 1.6, -2.4, 2.4, 1, 100);
+    mat4 projectionMatrix = mat4::Frustum(-1.6f, 1.6f, -2.4f, 2.4f, 1.0f, 100.0f);
     glUniformMatrix4fv(projectionUniform, 1, 0, projectionMatrix.Pointer());
 
-    mScene->setGlParams(mSimpleProgram);
+    mScene->SetShaders(mSimpleProgram);
     mScene->Initialize(width, height);
 }
 
