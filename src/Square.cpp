@@ -35,11 +35,11 @@ const GLubyte Indices[] = {
 };
 
 void Square::setOffset(vec3 offset) {
-    m_offset = offset;
+    mOffset = offset;
 }
 
 void Square::setScale(vec3 scale) {
-    m_scale = scale;
+    mScale = scale;
 }
 
 int Square::getVerticesCount() const {
@@ -51,18 +51,18 @@ int Square::getIndicesCount() const {
 }
 
 Square::Square() {
-    m_scale = vec3(1,1,1);
-    m_offset = vec3(0,0,0);
+    mScale = vec3(1,1,1);
+    mOffset = vec3(0,0,0);
 }
 
 void Square::GenerateVertices(vector<Vertex>& vertices, vector<GLubyte>& indices, vec4 color) {
     for (int currentVertice = 0; currentVertice < this->getVerticesCount(); currentVertice++)
     {
         Vertex current = Vertices[currentVertice];
-        current.Position.x = current.Position.x * m_scale.x;
-        current.Position.y = current.Position.y * m_scale.y;
-        current.Position.z = current.Position.z * m_scale.z;
-        current.Position += m_offset;
+        current.Position.x = current.Position.x * mScale.x;
+        current.Position.y = current.Position.y * mScale.y;
+        current.Position.z = current.Position.z * mScale.z;
+        current.Position += mOffset;
         current.Color = current.Color;
         vertices.push_back(current);
     }

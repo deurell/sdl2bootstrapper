@@ -29,6 +29,6 @@ public:
     int getIndicesCount() const;
     
 private:
-    vec3 m_offset;
-    vec3 m_scale;
+    vec3 mOffset;
+    vec3 mScale;
 };

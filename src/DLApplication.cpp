@@ -6,7 +6,7 @@ void DLApplication::UpdateAnimation(float timeStep) {
     if (!SceneAvailable()) return;
     mScene->UpdateAnimation(timeStep);
     SceneRequest request = mScene->GetSceneRequest();
-    if (request.Scene != 0) {
+    if (request.SceneId != 0) {
         SetupNextScene(request);
     }
 }

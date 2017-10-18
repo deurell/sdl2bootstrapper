@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
         sdlDie("Failed to init SDL Video");
     }
     atexit(SDL_Quit);
-    SDL_GL_LoadLibrary(NULL); // Default OpenGL is fine.
+    SDL_GL_LoadLibrary(nullptr);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
     glViewport(0, 0, width, height);
     glEnable(GL_DEPTH_TEST);
 
-    DLApplication* application =  new DLApplication();
+    DLApplication* application = new DLApplication();
     application->Initialize(width, height);
 
     Uint32 lastTime = 0;
