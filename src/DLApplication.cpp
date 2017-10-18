@@ -3,16 +3,16 @@
 #include "SplashScene.h"
 
 void DLApplication::UpdateAnimation(float timeStep) {
-    if(!SceneAvailable()) return;
+    if (!SceneAvailable()) return;
     mScene->UpdateAnimation(timeStep);
     SceneRequest request = mScene->GetSceneRequest();
-    if(request.Scene != 0) {
+    if (request.Scene != 0) {
         SetupNextScene(request);
     }
 }
 
 void DLApplication::SetupNextScene(SceneRequest /*request*/) {
-    if(mScene != nullptr) {
+    if (mScene != nullptr) {
         delete mScene;
         mScene = nullptr;
     }
@@ -47,12 +47,12 @@ void DLApplication::Initialize(int width, int height) {
 }
 
 void DLApplication::Render() const {
-    if(!SceneAvailable()) return;
+    if (!SceneAvailable()) return;
     mScene->Render();
 }
 
 void DLApplication::OnRotate(DeviceOrientation newOrientation) {
-    if(!SceneAvailable()) { return; }
+    if (!SceneAvailable()) { return; }
     mScene->OnRotate(newOrientation);
 }
 

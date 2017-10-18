@@ -5,7 +5,7 @@
 #include <SDL2/SDL.h>
 
 static SDL_Window *window = nullptr;
-static SDL_GLContext context;
+static SDL_GLContext context = nullptr;
 
 constexpr int FRAMES_PER_SECOND = 60;
 constexpr int SCREEN_WIDTH = 960;
