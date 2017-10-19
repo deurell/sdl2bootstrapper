@@ -3,14 +3,9 @@
 #include "IRender.hpp"
 #include "SceneRequest.h"
 #include "glad/glad.h"
-
-#define STRINGIFY(A)  #A
-#include "../Shaders/Simple.vert"
-#include "../Shaders/Simple.frag"
+#include <string>
 
 class DLScene;
-
-using namespace std;
 
 class DLApplication : public IRender {
 public:
@@ -29,6 +24,7 @@ public:
 
 private:
     void SetupNextScene(SceneRequest sceneRequest);
+    std::string LoadShader(std::string fileName);
 
     DLScene *mScene;
     GLuint BuildShader(const char* source, GLenum shaderType) const;

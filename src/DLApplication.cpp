@@ -1,18 +1,20 @@
 
+#include <fstream>
+#include <sstream>
 #include "DLApplication.h"
 #include "SplashScene.h"
 
 void DLApplication::UpdateAnimation(float timeStep) {
-    if(!SceneAvailable()) return;
+    if (!SceneAvailable()) return;
     mScene->UpdateAnimation(timeStep);
     SceneRequest request = mScene->GetSceneRequest();
-    if(request.Scene != 0) {
+    if (request.SceneId != 0) {
         SetupNextScene(request);
     }
 }
 
 void DLApplication::SetupNextScene(SceneRequest /*request*/) {
-    if(mScene != nullptr) {
+    if (mScene != nullptr) {
         delete mScene;
         mScene = nullptr;
     }
@@ -34,7 +36,10 @@ void DLApplication::Initialize(int width, int height) {
     mHeight = height;
     mWidth = width;
 
-    mSimpleProgram = BuildProgram(SimpleVertexShader, SimpleFragmentShader);
+    auto vShader = LoadShader("Simple.vert");
+    auto fShader = LoadShader("Simple.frag");
+
+    mSimpleProgram = BuildProgram(vShader.c_str(), fShader.c_str());
     glUseProgram(mSimpleProgram);
 
     // Set the projection matrix.
@@ -47,12 +52,12 @@ void DLApplication::Initialize(int width, int height) {
 }
 
 void DLApplication::Render() const {
-    if(!SceneAvailable()) return;
+    if (!SceneAvailable()) return;
     mScene->Render();
 }
 
 void DLApplication::OnRotate(DeviceOrientation newOrientation) {
-    if(!SceneAvailable()) { return; }
+    if (!SceneAvailable()) { return; }
     mScene->OnRotate(newOrientation);
 }
 
@@ -111,4 +116,11 @@ GLuint DLApplication::BuildProgram(const char* vShader,
 
 bool DLApplication::SceneAvailable() const {
     return mScene != nullptr;
+}
+
+std::string DLApplication::LoadShader(std::string fileName) {
+    std::ifstream fileStream(fileName);
+    std::stringstream stringStream;
+    stringStream << fileStream.rdbuf();
+    return stringStream.str();
 }
