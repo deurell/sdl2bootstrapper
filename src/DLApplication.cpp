@@ -1,4 +1,6 @@
 
+#include <fstream>
+#include <sstream>
 #include "DLApplication.h"
 #include "SplashScene.h"
 
@@ -34,7 +36,10 @@ void DLApplication::Initialize(int width, int height) {
     mHeight = height;
     mWidth = width;
 
-    mSimpleProgram = BuildProgram(SimpleVertexShader, SimpleFragmentShader);
+    auto vShader = LoadShader("Simple.vert");
+    auto fShader = LoadShader("Simple.frag");
+
+    mSimpleProgram = BuildProgram(vShader.c_str(), fShader.c_str());
     glUseProgram(mSimpleProgram);
 
     // Set the projection matrix.
@@ -111,4 +116,11 @@ GLuint DLApplication::BuildProgram(const char* vShader,
 
 bool DLApplication::SceneAvailable() const {
     return mScene != nullptr;
+}
+
+std::string DLApplication::LoadShader(std::string fileName) {
+    std::ifstream fileStream(fileName);
+    std::stringstream stringStream;
+    stringStream << fileStream.rdbuf();
+    return stringStream.str();
 }

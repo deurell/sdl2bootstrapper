@@ -1,8 +1,7 @@
-static const char* SimpleFragmentShader = STRINGIFY(
+#version 410
 
-varying vec4 DestinationColor;
+in vec4 DestinationColor;
 
 void main(void) {
     gl_FragColor = DestinationColor;
 }
-);
