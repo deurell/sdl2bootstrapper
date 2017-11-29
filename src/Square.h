@@ -23,11 +23,11 @@ class Square
 public:
     Square();
     void GenerateVertices(vector<Vertex>& vertices, vector<GLubyte>& indices, vec4 color);
-    void setOffset(vec3 offset);
-    void setScale(vec3 scale);
-    int getVerticesCount() const;
-    int getIndicesCount() const;
-    
+    void SetOffset(vec3 offset);
+    void SetScale(vec3 scale);
+    int GetVerticesCount() const;
+    int GetIndicesCount() const;
+
 private:
     vec3 mOffset;
     vec3 mScale;

@@ -28,7 +28,9 @@ set(SOURCE_FILES
         src/Square.h
         src/Square.cpp
         src/Vector.h
-        src/DLApplication.cpp)
+        src/DLApplication.cpp
+        src/DLSimpleScene.cpp
+        src/DLSimpleScene.h)
 
 add_executable(sdl2_glad ${SOURCE_FILES})
 

@@ -8,7 +8,7 @@
 
 #include "Square.h"
 
-const Vertex Vertices[] = {
+const Vertex SquareVertices[] = {
     vec3(-1,1,-1),vec4(1,1,1,1),
     vec3(1,1,-1),vec4(1,1,1,1),
     vec3(-1,-1,-1),vec4(1,1,1,1),
@@ -19,7 +19,7 @@ const Vertex Vertices[] = {
     vec3(1,-1,1),vec4(1,1,1,1)
 };
 
-const GLubyte Indices[] = {
+const GLubyte SquareIndices[] = {
     0,1,2,
     1,2,3,
     4,5,6,
@@ -34,20 +34,20 @@ const GLubyte Indices[] = {
     3,6,7
 };
 
-void Square::setOffset(vec3 offset) {
+void Square::SetOffset(vec3 offset) {
     mOffset = offset;
 }
 
-void Square::setScale(vec3 scale) {
+void Square::SetScale(vec3 scale) {
     mScale = scale;
 }
 
-int Square::getVerticesCount() const {
-    return sizeof(Vertices) / sizeof(Vertex);
+int Square::GetVerticesCount() const {
+    return sizeof(SquareVertices) / sizeof(Vertex);
 }
 
-int Square::getIndicesCount() const {
-    return sizeof(Indices) / sizeof(GLubyte);
+int Square::GetIndicesCount() const {
+    return sizeof(SquareIndices) / sizeof(GLubyte);
 }
 
 Square::Square() {
@@ -56,9 +56,9 @@ Square::Square() {
 }
 
 void Square::GenerateVertices(vector<Vertex>& vertices, vector<GLubyte>& indices, vec4 color) {
-    for (int currentVertice = 0; currentVertice < this->getVerticesCount(); currentVertice++)
+    for (int currentVertice = 0; currentVertice < this->GetVerticesCount(); currentVertice++)
     {
-        Vertex current = Vertices[currentVertice];
+        Vertex current = SquareVertices[currentVertice];
         current.Position.x = current.Position.x * mScale.x;
         current.Position.y = current.Position.y * mScale.y;
         current.Position.z = current.Position.z * mScale.z;
@@ -67,7 +67,7 @@ void Square::GenerateVertices(vector<Vertex>& vertices, vector<GLubyte>& indices
         vertices.push_back(current);
     }
 
-    for (int currentIndex=0; currentIndex < this->getIndicesCount(); currentIndex++) {
-        indices.push_back(Indices[currentIndex]);
+    for (int currentIndex=0; currentIndex < this->GetIndicesCount(); currentIndex++) {
+        indices.push_back(SquareIndices[currentIndex]);
     }
 }

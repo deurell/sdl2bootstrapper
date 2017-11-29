@@ -31,7 +31,7 @@ protected:
     void OnFingerDown(ivec2 location) override {}
     void OnFingerMove(ivec2 oldLocation, ivec2 newLocation) override {}
 
-    int GetSceneIdentifier();
+    int GetSceneIdentifier() const;
     void RequestScene(SceneRequest scene);
 
     GLuint mSimpleProgram;

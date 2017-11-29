@@ -14,7 +14,7 @@ DLScene::DLScene() :
         mHeight(0)
 {}
 
-int DLScene::GetSceneIdentifier() {
+int DLScene::GetSceneIdentifier() const {
     return mSceneIdentifier;
 }
 

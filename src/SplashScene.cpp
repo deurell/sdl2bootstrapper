@@ -36,6 +36,7 @@ SplashScene::~SplashScene() {
 }
 
 void SplashScene::Initialize(int width, int height) {
+    DLScene::Initialize(width, height);
     mDepthDegree = 0;
     mCoolness = 1451.66f;
     mHeight = height;
@@ -65,22 +66,24 @@ void SplashScene::Initialize(int width, int height) {
 }
 
 void SplashScene::UpdateAnimation(float timeStep) {
-    float cameraDegree = timeStep * (Pi/180*45.0f);
+    DLScene::UpdateAnimation(timeStep);
+    float cameraDegree = timeStep * (Pi/180 * 45.0f);
     float val = mCameraDegree + cameraDegree;
     mCameraDegree = fmod(val, TwoPi);
 
-    float wobbleDegree = timeStep * (Pi/180*25.0f);
+    float wobbleDegree = timeStep * (Pi / 180 * 25.0f);
     val = mDepthDegree + wobbleDegree;
     mDepthDegree = fmod(val, TwoPi);
 
     auto z = 30 * sin(mCameraDegree);
     auto y = 30 * cos(mCameraDegree);
-    auto wobble = (Pi/180*40) * sin(mDepthDegree);
-    mCamera->setPosition(Vector3<float>(0, y, z-30));
-    mCamera->setRotation(Vector3<float>((Pi/180*270) + mCameraDegree, wobble, -wobble));
+    auto wobble = (Pi / 180 * 40) * sin(mDepthDegree);
+    mCamera->setPosition(Vector3<float>(0, y, z - 30));
+    mCamera->setRotation(Vector3<float>((Pi / 180 * 270) + mCameraDegree, wobble, -wobble));
 }
 
 void SplashScene::Render() const {
+    DLScene::Render();
     glClearColor(0.6f, 0.6f, 0.6f, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     DrawLogo();
@@ -135,7 +138,7 @@ void SplashScene::DrawSquare(vec3 translate, vec4 color) const {
     glVertexAttrib4f(colorSlot, color.x, color.y, color.z, color.w);
     glEnableVertexAttribArray(positionSlot);
     //glEnableVertexAttribArray(colorSlot);
-    glDrawElements(GL_TRIANGLES, mSquare->getIndicesCount(), GL_UNSIGNED_BYTE, nullptr);
+    glDrawElements(GL_TRIANGLES, mSquare->GetIndicesCount(), GL_UNSIGNED_BYTE, nullptr);
     //glDisableVertexAttribArray(colorSlot);
     glDisableVertexAttribArray(positionSlot);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
