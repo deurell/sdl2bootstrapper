@@ -17,11 +17,11 @@ public:
     Camera();
     ~Camera() = default;
 
-    Vector3<float> getPosition();
-    void setPosition(Vector3<float> position);
-    Vector3<float> getRotation();
-    void setRotation(Vector3<float> rotation);
-    Matrix4<float> toMatrix();
+    Vector3<float> GetPosition();
+    void SetPosition(Vector3<float> position);
+    Vector3<float> GetRotation();
+    void SetRotation(Vector3<float> rotation);
+    Matrix4<float> ToMatrix();
     
 private:
     Vector3<float> mPosition;

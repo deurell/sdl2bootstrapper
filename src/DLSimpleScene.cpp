@@ -19,7 +19,7 @@ void DLSimpleScene::Initialize(int width, int height) {
 void DLSimpleScene::Render() const {
     DLScene::Render();
 
-    GLfloat vertices[] = {0.0f, 0.5f, 0.0f,
+    const GLfloat vertices[] = {0.0f, 0.5f, 0.0f,
                           -0.5f, -0.5f, 0.0f,
                           0.5f, -0.5f, 0.0f};
 
@@ -41,9 +41,9 @@ void DLSimpleScene::Render() const {
     GLint cameraUniform = glGetUniformLocation(mSimpleProgram, "Camera");
 
     Camera camera;
-    camera.setPosition(Vector3<float>(0, 0, 10));
+    camera.SetPosition(Vector3<float>(0, 0, 10));
 
-    glUniformMatrix4fv(cameraUniform, 1, 0, camera.toMatrix().Pointer());
+    glUniformMatrix4fv(cameraUniform, 1, 0, camera.ToMatrix().Pointer());
 
     GLint positionSlot = glGetAttribLocation(mSimpleProgram, "Position");
     glVertexAttribPointer(positionSlot, 3, GL_FLOAT, GL_FALSE, 0, vertices);

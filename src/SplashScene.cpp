@@ -44,8 +44,8 @@ void SplashScene::Initialize(int width, int height) {
 
     mSquare = new Square();
     mCamera = new Camera();
-    mCamera->setPosition(Vector3<float>(0, 0, 20));
-    mCamera->setRotation(Vector3<float>(0, 0, 0));
+    mCamera->SetPosition(Vector3<float>(0, 0, 20));
+    mCamera->SetRotation(Vector3<float>(0, 0, 0));
     
     vector<Vertex> cubeVertices;
     vector<GLubyte> cubeIndices;
@@ -78,8 +78,8 @@ void SplashScene::UpdateAnimation(float timeStep) {
     auto z = 30 * sin(mCameraDegree);
     auto y = 30 * cos(mCameraDegree);
     auto wobble = (Pi / 180 * 40) * sin(mDepthDegree);
-    mCamera->setPosition(Vector3<float>(0, y, z - 30));
-    mCamera->setRotation(Vector3<float>((Pi / 180 * 270) + mCameraDegree, wobble, -wobble));
+    mCamera->SetPosition(Vector3<float>(0, y, z - 30));
+    mCamera->SetRotation(Vector3<float>((Pi / 180 * 270) + mCameraDegree, wobble, -wobble));
 }
 
 void SplashScene::Render() const {
@@ -126,7 +126,7 @@ void SplashScene::DrawSquare(vec3 translate, vec4 color) const {
     glUniformMatrix4fv(modelviewUniform, 1, 0, modelviewMatrix.Pointer());
     
     GLuint cameraUniform = glGetUniformLocation(mSimpleProgram, "Camera");
-    glUniformMatrix4fv(cameraUniform, 1, 0, mCamera->toMatrix().Pointer());
+    glUniformMatrix4fv(cameraUniform, 1, 0, mCamera->ToMatrix().Pointer());
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);

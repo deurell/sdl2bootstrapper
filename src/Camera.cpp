@@ -13,23 +13,23 @@ Camera::Camera() :
     mRotation(Vector3<float>(0,0,0))
 {}
 
-Vector3<float> Camera::getPosition() {
+Vector3<float> Camera::GetPosition() {
     return mPosition;
 }
 
-void Camera::setPosition(Vector3<float> position) {
+void Camera::SetPosition(Vector3<float> position) {
     mPosition = position;
 }
 
-Vector3<float> Camera::getRotation() {
+Vector3<float> Camera::GetRotation() {
     return mRotation;
 }
 
-void Camera::setRotation(Vector3<float> rotation) {
+void Camera::SetRotation(Vector3<float> rotation) {
     mRotation = rotation;
 }
 
-Matrix4<float> Camera::toMatrix() {
+Matrix4<float> Camera::ToMatrix() {
     float xw = mRotation.x;
     float yw = mRotation.y;
     float zw = mRotation.z;
