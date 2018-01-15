@@ -1,5 +1,5 @@
-#version 410
-in vec4 DestinationColor;
+#version 120
+varying vec4 DestinationColor;
 
 void main(void) {
     gl_FragColor = DestinationColor;

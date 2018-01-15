@@ -22,14 +22,12 @@ int main(int argc, char *argv[]) {
     }
     atexit(SDL_Quit);
     SDL_GL_LoadLibrary(nullptr);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-    SDL_SetHint(SDL_HINT_FRAMEBUFFER_ACCELERATION, "1");
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
     SDL_GL_SetSwapInterval(1);
 
     window = SDL_CreateWindow(

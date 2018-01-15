@@ -19,14 +19,14 @@ void DLApplication::SetupNextScene(SceneRequest /*request*/) {
         delete mScene;
         mScene = nullptr;
     }
-    DLScene *scene = new DLSimpleScene();
+    DLScene *scene = new SplashScene();
     scene->SetShaders(mSimpleProgram);
     scene->Initialize(mWidth, mHeight);
     mScene = scene;
 }
 
 DLApplication::DLApplication() : mCurrentScene(SceneRequest(0)) {
-    mScene = new DLSimpleScene();
+    mScene = new SplashScene();
 }
 
 DLApplication::~DLApplication() {
