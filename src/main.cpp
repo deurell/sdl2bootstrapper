@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include "glad/glad.h"
 #include "DLApplication.h"
-#include <SDL2/SDL.h>
+#include "SDL2/SDL.h"
 
 static SDL_Window *window = nullptr;
 static SDL_GLContext context = nullptr;

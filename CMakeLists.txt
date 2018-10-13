@@ -33,3 +33,5 @@ set(SOURCE_FILES
 add_executable(sdl2_glad ${SOURCE_FILES})
 
 target_link_libraries(sdl2_glad ${SDL2_LIBRARY})
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Shaders/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
