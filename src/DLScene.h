@@ -10,7 +10,7 @@
 
 #include "SceneRequest.h"
 #include <glad/glad.h>
-#include "IRender.hpp"
+#include "IRender.h"
 
 class DLScene : public IRender {
 
@@ -25,7 +25,7 @@ protected:
     // IRender
     void Initialize(int width, int height) override;
     void Render() const override;
-    void UpdateAnimation(float timeStep) override {}
+    void Update(float timeStep) override {}
     void OnRotate(DeviceOrientation newOrientation) override {}
     void OnFingerUp(ivec2 location) override {}
     void OnFingerDown(ivec2 location) override {}
@@ -34,7 +34,7 @@ protected:
     int GetSceneIdentifier() const;
     void RequestScene(SceneRequest scene);
 
-    GLuint mSimpleProgram;
+    GLuint mProgram;
     int mHeight;
     int mWidth;
 

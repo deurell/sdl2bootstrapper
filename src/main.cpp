@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
     glViewport(0, 0, width, height);
     glEnable(GL_DEPTH_TEST);
 
-    DLApplication* application = new DLApplication();
+    auto* application = new DLApplication();
     application->Initialize(width, height);
 
     Uint32 lastTime = 0;
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
         Uint32 delta = currentTime - lastTime;
         lastTime = currentTime;
 
-        application->UpdateAnimation(delta / 1000.0f);
+        application->Update(delta / 1000.0f);
         application->Render();
 
         if (delta < 1000 / FRAMES_PER_SECOND) {

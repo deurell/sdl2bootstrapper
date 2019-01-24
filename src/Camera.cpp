@@ -8,7 +8,7 @@
 #include "Camera.h"
 #include "Quaternion.h"
 
-Camera::Camera() :
+Camera::Camera():
     mPosition(Vector3<float>(0,0,0)),
     mRotation(Vector3<float>(0,0,0))
 {}

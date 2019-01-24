@@ -23,7 +23,7 @@ void DLScene::RequestScene(SceneRequest scene) {
 }
 
 void DLScene::SetShaders(GLuint program) {
-    mSimpleProgram = program;
+    mProgram = program;
 }
 
 void DLScene::Initialize(int width, int height) {

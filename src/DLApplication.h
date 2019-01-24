@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IRender.hpp"
+#include "IRender.h"
 #include "SceneRequest.h"
 #include "glad/glad.h"
 #include <string>
@@ -14,7 +14,7 @@ public:
 
     void Initialize(int width, int height) override;
     void Render() const override;
-    void UpdateAnimation(float timeStep) override;
+    void Update(float timeStep) override;
     void OnRotate(DeviceOrientation newOrientation) override;
     void OnFingerUp(ivec2 location) override;
     void OnFingerDown(ivec2 location) override;

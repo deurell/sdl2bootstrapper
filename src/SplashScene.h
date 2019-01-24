@@ -23,7 +23,7 @@ public:
 protected:
     void Initialize(int width, int height) override;
     void Render() const override;
-    void UpdateAnimation(float timeStep) override;
+    void Update(float timeStep) override;
 
 private:
     void DrawLogo() const;

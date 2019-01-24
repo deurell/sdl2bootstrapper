@@ -5,9 +5,9 @@
 #include "SplashScene.h"
 #include "DLSimpleScene.h"
 
-void DLApplication::UpdateAnimation(float timeStep) {
+void DLApplication::Update(float timeStep) {
     if (!SceneAvailable()) return;
-    mScene->UpdateAnimation(timeStep);
+    mScene->Update(timeStep);
     SceneRequest request = mScene->GetSceneRequest();
     if (request.SceneId != 0) {
         SetupNextScene(request);
@@ -19,14 +19,14 @@ void DLApplication::SetupNextScene(SceneRequest /*request*/) {
         delete mScene;
         mScene = nullptr;
     }
-    DLScene *scene = new SplashScene();
+    DLScene *scene = new DLSimpleScene();
     scene->SetShaders(mSimpleProgram);
     scene->Initialize(mWidth, mHeight);
     mScene = scene;
 }
 
 DLApplication::DLApplication() : mCurrentScene(SceneRequest(0)) {
-    mScene = new SplashScene();
+    mScene = new DLSimpleScene();
 }
 
 DLApplication::~DLApplication() {

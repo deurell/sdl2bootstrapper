@@ -19,7 +19,7 @@ set(SOURCE_FILES
         src/DLApplication.h
         src/DLScene.h
         src/DLScene.cpp
-        src/IRender.hpp
+        src/IRender.h
         src/Matrix.h
         src/Quaternion.h
         src/SceneRequest.h

@@ -65,8 +65,8 @@ void SplashScene::Initialize(int width, int height) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void SplashScene::UpdateAnimation(float timeStep) {
-    DLScene::UpdateAnimation(timeStep);
+void SplashScene::Update(float timeStep) {
+    DLScene::Update(timeStep);
     float cameraDegree = timeStep * (Pi/180 * 45.0f);
     float val = mCameraDegree + cameraDegree;
     mCameraDegree = fmod(val, TwoPi);
@@ -110,10 +110,10 @@ void SplashScene::DrawLogo() const {
 }
 
 void SplashScene::DrawSquare(vec3 translate, vec4 color) const {
-    GLuint positionSlot = glGetAttribLocation(mSimpleProgram, "Position");
-    GLuint colorSlot = glGetAttribLocation(mSimpleProgram, "SourceColor");
+    GLuint positionSlot = glGetAttribLocation(mProgram, "Position");
+    GLuint colorSlot = glGetAttribLocation(mProgram, "SourceColor");
     
-    GLuint deviceUniform = glGetUniformLocation(mSimpleProgram, "Device");
+    GLuint deviceUniform = glGetUniformLocation(mProgram, "Device");
     mat4 deviceRotation = mat4::Rotate(mDevice);
     glUniformMatrix4fv(deviceUniform, 1, 0, deviceRotation.Pointer());
     
@@ -121,11 +121,11 @@ void SplashScene::DrawSquare(vec3 translate, vec4 color) const {
     mat4 scale = mat4::Scale(mScale);
     mat4 translation = mat4::Translate(translate.x, translate.y, translate.z);
     
-    GLint modelviewUniform = glGetUniformLocation(mSimpleProgram, "Modelview");
+    GLint modelviewUniform = glGetUniformLocation(mProgram, "Modelview");
     mat4 modelviewMatrix = scale * rotation * translation;
     glUniformMatrix4fv(modelviewUniform, 1, 0, modelviewMatrix.Pointer());
     
-    GLuint cameraUniform = glGetUniformLocation(mSimpleProgram, "Camera");
+    GLuint cameraUniform = glGetUniformLocation(mProgram, "Camera");
     glUniformMatrix4fv(cameraUniform, 1, 0, mCamera->ToMatrix().Pointer());
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer);
